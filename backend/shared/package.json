@@ -1,0 +1,11 @@
+{
+    "name": "shared",
+    "private": true,
+    "type": "module",
+    "exports": {
+      "./errors": "./errors.js",
+      "./mongodb": "./database/mongodb.js",
+      "./auth-mw": "./middlewares/auth.middleware.js",
+      "./error-mw": "./middlewares/error.middleware.js"
+    }
+  }
