@@ -1,18 +1,15 @@
-import mongoose from 'mongoose';
-import { DB_URI, NODE_ENV } from '../../shared/config/env.js';
-
-if (!DB_URI) {
-    throw new Error('DB_URI is not defined, Please define the MONGO DB_URI environment variable within .env.{development, production, test}.local');
-}
+import mongoose from './mongoose.js';
+import { DB_URI, NODE_ENV } from '../config/env.js';
 
 const connectDB = async () => {
-    try {
-        await mongoose.connect(DB_URI);
-        console.log(`MongoDB connected in ${NODE_ENV} mode`);
-    } catch (error) {
-        console.error(`MongoDB connection error: ${error.message}`);
-        process.exit(1);
-    }
-}
+  try {
+    mongoose.set('bufferCommands', false);        // fail fast if not connected
+    await mongoose.connect(DB_URI, { serverSelectionTimeoutMS: 15000 });
+    console.log(`MongoDB connected in ${NODE_ENV} mode`);
+  } catch (error) {
+    console.error(`MongoDB connection error: ${error.message}`);
+    process.exit(1);
+  }
+};
 
 export default connectDB;

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import UserModel from '../../user-service/models/user.model.js';
+import UserModel from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import BlacklistedTokenModel from '../models/auth.model.js';

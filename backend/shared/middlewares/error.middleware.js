@@ -1,4 +1,4 @@
-import { AppError } from '../../shared/utils/errors.js';
+import { AppError } from '../utils/errors.js';
 
 // Global error handler
 export const errorHandler = (err, req, res, next) => {

@@ -7,7 +7,7 @@ import {
 import { 
     authorize_admin, 
     authorize_superadmin
-} from "../../middlewares/auth.middleware.js";
+} from "../middlewares/auth.middleware.js";
 
 const AnalyticsRouter = Router();
 
