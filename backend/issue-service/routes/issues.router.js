@@ -14,9 +14,9 @@ import {
     authorize_admin, 
     authorize_superadmin,
     checkResourceOwnership
-} from "../../middlewares/auth.middleware.js";
-import { uploadLimiter } from "../../middlewares/rateLimit.middleware.js";
-import { uploadToS3 } from "../../utils/s3.js";
+} from "../middlewares/auth.middleware.js";
+import { uploadLimiter } from "../middlewares/rateLimit.middleware.js";
+import { uploadToS3 } from "../utils/s3.js";
 import IssueModel from "../models/issues.model.js";
 
 const IssueRouter = Router();

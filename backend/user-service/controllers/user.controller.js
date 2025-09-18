@@ -1,6 +1,6 @@
 import UserModel from '../models/user.model.js';
 import IssueModel from '../models/issues.model.js';
-import { BadRequestError, NotFoundError, ForbiddenError } from '../../utils/errors.js';
+import { BadRequestError, NotFoundError, ForbiddenError } from '../utils/errors.js';
 
 // Get all users with pagination and filtering
 export const getUsers = async (req, res, next) => {

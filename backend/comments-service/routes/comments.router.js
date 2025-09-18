@@ -9,9 +9,9 @@ import {
 import { 
     authorize, 
     checkResourceOwnership
-} from "../../middlewares/auth.middleware.js";
-import { commentLimiter } from "../../middlewares/rateLimit.middleware.js";
-import { uploadToS3 } from "../../utils/s3.js";
+} from "../middlewares/auth.middleware.js";
+import { commentLimiter } from "../middlewares/rateLimit.middleware.js";
+import { uploadToS3 } from "../utils/s3.js";
 import CommentModel from "../models/comment.model.js";
 
 const CommentRouter = Router();

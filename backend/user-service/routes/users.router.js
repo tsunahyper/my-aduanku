@@ -12,9 +12,9 @@ import {
     authorize, 
     authorize_admin, 
     authorize_superadmin
-} from "../../middlewares/auth.middleware.js";
-import { uploadLimiter } from "../../middlewares/rateLimit.middleware.js";
-import { uploadToS3 } from "../../utils/s3.js";
+} from "../middlewares/auth.middleware.js";
+import { uploadLimiter } from "../middlewares/rateLimit.middleware.js";
+import { uploadToS3 } from "../utils/s3.js";
 
 const UsersRouter = Router();
 

@@ -1,8 +1,8 @@
 import IssueModel from '../models/issues.model.js';
 import CommentModel from '../models/comment.model.js';
-import UserModel from '../../user-service/models/user.model.js';
-import { BadRequestError, NotFoundError, ForbiddenError } from '../../utils/errors.js';
-import { uploadToS3, deleteFromS3 } from '../../utils/s3.js';
+import UserModel from '../models/user.model.js';
+import { BadRequestError, NotFoundError, ForbiddenError } from '../utils/errors.js';
+import { uploadToS3, deleteFromS3 } from '../utils/s3.js';
 
 // Create a new issue
 export const createIssue = async (req, res, next) => {

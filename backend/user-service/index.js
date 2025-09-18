@@ -1,8 +1,8 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { PORT } from '../config/env.js';
-import connectDB from '../database/mongodb.js';
-import errorMiddleware from '../middlewares/error.middleware.js';
+import { PORT } from './config/env.js';
+import connectDB from './database/mongodb.js';
+import errorMiddleware from './middlewares/error.middleware.js';
 import UsersRouter from './routes/users.router.js';
 
 const app = express();
