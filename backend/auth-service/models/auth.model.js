@@ -1,25 +1,23 @@
 import mongoose from 'mongoose';
 
 const blacklistedTokensSchema = new mongoose.Schema({
-    token: {
-        type: String,
-        required: true,
-        unique: true,
+  token: { 
+    type: String, 
+    required: true, 
+    unique: true 
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        index: true
+  reason: {
+    type: String, 
+    default: 'logout' 
     },
-    isActive: {
-        type: Boolean,
-        default: true,
-    },
-});
+  expiresAt: { 
+    type: Date, 
+    required: true 
+    }
+}, { timestamps: true });
 
-// Auto-expire blacklisted tokens after 14 days (adjust as needed)
-blacklistedTokensSchema.index({ createdAt: 1 }, { expireAfterSeconds: 1209600 });
+// auto-remove when expiresAt passes
+blacklistedTokensSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+blacklistedTokensSchema.index({ token: 1 });
 
-const BlacklistedTokenModel = mongoose.model('BlacklistedToken', blacklistedTokensSchema);
-
-export default BlacklistedTokenModel;
+export default mongoose.model('BlacklistedToken', blacklistedTokensSchema);

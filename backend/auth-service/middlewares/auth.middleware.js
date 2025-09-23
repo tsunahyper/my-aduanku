@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import UserModel from '../../user-service/models/user.model.js';
-import BlacklistedTokenModel from '../../auth-service/models/auth.model.js';
+import UserModel from '../models/user.model.js';
+import BlacklistedTokenModel from '../models/auth.model.js';
 import { UnauthorizedError, ForbiddenError, NotFoundError } from '../utils/errors.js';
 
 const authenticate = async (req) => {

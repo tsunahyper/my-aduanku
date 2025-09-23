@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json()); // Parses incoming requests with JSON payloads and is based on the body-parser library.
 app.use(express.urlencoded({ extended: false })); // Parses incoming requests with URL-encoded payloads and is based on the body-parser library.
 app.use(cookieParser()); // Reads cookies from incoming requests and populates req.cookies with an object keyed by the cookie names.
+app.set('trust proxy', 1);
 
 // Routes
 app.use('/api/v1/analytics', AnalyticsRouter);

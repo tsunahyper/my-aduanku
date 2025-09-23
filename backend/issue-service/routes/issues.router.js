@@ -1,58 +1,69 @@
 import { Router } from "express";
-import { 
-    createIssue, 
-    getIssues, 
-    getIssue, 
-    updateIssue, 
-    deleteIssue,
-    uploadAttachments,
-    assignIssue,
-    getIssuesNearLocation
+import {
+  createIssue,
+  getIssues,
+  getIssue,
+  updateIssue,
+  deleteIssue,
+  uploadAttachments,
+  assignIssue,
+  getIssuesNearLocation
 } from "../controllers/issues.controller.js";
-import { 
-    authorize, 
-    authorize_admin, 
-    authorize_superadmin,
-    checkResourceOwnership
+import {
+  authorize,
+  authorize_admin,
+  authorize_superadmin,
+  checkResourceOwnership
 } from "../middlewares/auth.middleware.js";
-import { uploadLimiter } from "../middlewares/rateLimit.middleware.js";
+import { uploadLimiter, generalLimiter } from "../middlewares/rateLimit.middleware.js";
 import { uploadToS3 } from "../utils/s3.js";
 import IssueModel from "../models/issues.model.js";
 
 const IssueRouter = Router();
 
-// Public routes
-IssueRouter.get('/near', getIssuesNearLocation);
+// Public (read) – apply general limiter
+IssueRouter.get('/near', generalLimiter, (req, res, next) => {
+  getIssuesNearLocation(req, res, next);
+});
 
-// Protected routes
-IssueRouter.get('/', authorize, getIssues);
-IssueRouter.get('/:id', authorize, getIssue);
-IssueRouter.post('/', authorize, createIssue);
+// Protected reads – apply general limiter
+IssueRouter.get('/', authorize, generalLimiter, (req, res, next) => {
+  getIssues(req, res, next);
+});
+IssueRouter.get('/:id', authorize, generalLimiter, (req, res, next) => {
+  getIssue(req, res, next);
+});
 
-// File upload routes
-IssueRouter.post('/:id/attachments', 
-    authorize, 
-    uploadLimiter,
-    uploadToS3.array('attachments', 5),
-    uploadAttachments
+// Create
+IssueRouter.post('/', authorize, (req, res, next) => {
+  createIssue(req, res, next);
+});
+
+// File uploads – upload limiter + S3
+IssueRouter.post('/:id/attachments',
+  authorize,
+  uploadLimiter,
+  uploadToS3.array('attachments', 5),
+  (req, res, next) => uploadAttachments(req, res, next)
 );
 
-// Admin routes
-IssueRouter.put('/:id', 
-    authorize, 
-    checkResourceOwnership(IssueModel),
-    updateIssue
+// Update (owner or admin handled by controller; for strict ownership use createdBy)
+IssueRouter.put('/:id',
+  authorize,
+  checkResourceOwnership(IssueModel, 'id', 'createdBy'),
+  (req, res, next) => updateIssue(req, res, next)
 );
 
-IssueRouter.put('/:id/assign', 
-    authorize_admin, 
-    assignIssue
+// Assign (admin)
+IssueRouter.put('/:id/assign',
+  authorize_admin,
+  (req, res, next) => assignIssue(req, res, next)
 );
 
-// Super admin routes
-IssueRouter.delete('/:id', 
-    authorize_superadmin, 
-    deleteIssue
+// Delete (superadmin)
+IssueRouter.delete('/:id',
+  authorize_superadmin,
+  (req, res, next) => deleteIssue(req, res, next)
 );
 
 export default IssueRouter;

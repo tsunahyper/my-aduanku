@@ -1,39 +1,35 @@
 import { Router } from "express";
-import { 
-    getUsers, 
-    getUser, 
-    updateUser, 
+import {
+    getUsers,
+    getUser,
+    updateUser,
     deleteUser,
     uploadAvatar,
     getProfile,
     updateProfile
 } from "../controllers/user.controller.js";
-import { 
-    authorize, 
-    authorize_admin, 
-    authorize_superadmin
-} from "../middlewares/auth.middleware.js";
+import { authorize, authorize_admin, authorize_superadmin } from "../middlewares/auth.middleware.js";
 import { uploadLimiter } from "../middlewares/rateLimit.middleware.js";
 import { uploadToS3 } from "../utils/s3.js";
 
 const UsersRouter = Router();
 
-// Protected routes
-UsersRouter.get('/profile', authorize, getProfile);
-UsersRouter.put('/profile', authorize, updateProfile);
-UsersRouter.post('/profile/avatar', 
-    authorize, 
+// Self profile
+UsersRouter.get('/profile', authorize, (req, res, next) => getProfile(req, res, next));
+UsersRouter.put('/profile', authorize, (req, res, next) => updateProfile(req, res, next));
+UsersRouter.post('/profile/avatar',
+    authorize,
     uploadLimiter,
     uploadToS3.single('avatar'),
-    uploadAvatar
+    (req, res, next) => uploadAvatar(req, res, next)
 );
 
-// Admin routes
-UsersRouter.get('/', authorize_admin, getUsers);
-UsersRouter.get('/:id', authorize, getUser);
-UsersRouter.put('/:id', authorize_admin, updateUser);
+// Admin
+UsersRouter.get('/', authorize_admin, (req, res, next) => getUsers(req, res, next));
+UsersRouter.get('/:id', authorize, (req, res, next) => getUser(req, res, next));
+UsersRouter.put('/:id', authorize_admin, (req, res, next) => updateUser(req, res, next));
 
-// Super admin routes
-UsersRouter.delete('/:id', authorize_superadmin, deleteUser);
+// Superadmin
+UsersRouter.delete('/:id', authorize_superadmin, (req, res, next) => deleteUser(req, res, next));
 
 export default UsersRouter;

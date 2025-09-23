@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import UserModel from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import BlacklistedTokenModel from '../models/auth.model.js';
 
 export const register = async (req, res, next) => {
     const session = await mongoose.startSession();
@@ -70,14 +69,21 @@ export const login = async (req, res, next) => {
 
 export const logout = async (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const existingToken = await BlacklistedTokenModel.findOne({ token });
-        if (existingToken) {
-            return res.status(400).json({ success: false, message: 'Token is blacklisted' });
-        }
-        await BlacklistedTokenModel.create({ token });
-        res.status(200).json({ success: true, message: 'User logged out successfully!' });
-    } catch (error) {
-        next(error);
+      const h = req.headers.authorization || '';
+      if (!h.startsWith('Bearer ')) return res.status(400).json({ success:false, message:'Missing token' });
+      const token = h.split(' ')[1];
+  
+      // prevent duplicate insert (optional)
+      const exists = await BlacklistedToken.findOne({ token }).lean();
+      if (exists) return res.status(400).json({ success:false, message:'Token is already blacklisted' });
+  
+      const decoded = jwt.decode(token);
+      const expMs = decoded?.exp ? decoded.exp * 1000 : (Date.now() + 7*24*60*60*1000);
+  
+      await BlacklistedToken.create({ token, reason: 'logout', expiresAt: new Date(expMs) });
+  
+      res.status(200).json({ success:true, message:'User logged out successfully!' });
+    } catch (err) {
+      next(err);
     }
-};
+  };

@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set('trust proxy', 1);
 
 // Health
 app.get('/health', (req, res) => res.status(200).json({ ok: true, service: 'user-service' }));
