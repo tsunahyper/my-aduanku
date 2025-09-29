@@ -4,6 +4,10 @@ import { authLimiter } from '../middlewares/rateLimit.middleware.js';
 
 const AuthRouter = Router();
 
+AuthRouter.get('/health', (req, res) => {
+    res.status(200).json({ ok: true, service: 'auth-service', time: new Date().toISOString() });
+});
+
 AuthRouter.post('/register', authLimiter, (req, res, next) => {
     register(req, res, next);
 });

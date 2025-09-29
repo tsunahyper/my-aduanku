@@ -14,6 +14,10 @@ import { uploadToS3 } from "../utils/s3.js";
 
 const UsersRouter = Router();
 
+UsersRouter.get('/health', (req, res) => {
+    res.status(200).json({ ok: true, service: 'user-service', time: new Date().toISOString() });
+});
+
 // Self profile
 UsersRouter.get('/profile', authorize, (req, res, next) => getProfile(req, res, next));
 UsersRouter.put('/profile', authorize, (req, res, next) => updateProfile(req, res, next));

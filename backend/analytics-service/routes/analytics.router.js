@@ -5,6 +5,10 @@ import { getAnalyticsDashboard, generateAnalytics, getIssuesStatistics } from ".
 
 const AnalyticsRouter = Router();
 
+AnalyticsRouter.get('/health', (req, res) => {
+  res.status(200).json({ ok: true, service: 'analytics-service', time: new Date().toISOString() });
+});
+
 AnalyticsRouter.get('/statistics', authorize_superadmin, generalLimiter, (req, res, next) => {
   getIssuesStatistics(req, res, next);
 });

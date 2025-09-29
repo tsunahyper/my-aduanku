@@ -13,6 +13,10 @@ import CommentModel from "../models/comment.model.js";
 
 const CommentRouter = Router();
 
+CommentRouter.get('/health', (req, res) => {
+  res.status(200).json({ ok: true, service: 'comment-service', time: new Date().toISOString() });
+});
+
 // Get comments for an issue
 CommentRouter.get('/issue/:issueId', authorize, (req, res, next) => {
   getComments(req, res, next);

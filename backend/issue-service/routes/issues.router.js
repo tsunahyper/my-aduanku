@@ -21,6 +21,10 @@ import IssueModel from "../models/issues.model.js";
 
 const IssueRouter = Router();
 
+IssueRouter.get('/health', (req, res) => {
+  res.status(200).json({ ok: true, service: 'issue-service', time: new Date().toISOString() });
+});
+
 // Public (read) – apply general limiter
 IssueRouter.get('/near', generalLimiter, (req, res, next) => {
   getIssuesNearLocation(req, res, next);
