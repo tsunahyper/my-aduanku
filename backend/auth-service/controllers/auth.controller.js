@@ -4,8 +4,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res, next) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
     const { username, name, email, password, role } = req.body;
     
     try {
@@ -13,25 +11,46 @@ export const register = async (req, res, next) => {
         const existingUser = await UserModel.findOne({ email });
         
         if (existingUser) {
-            await session.abortTransaction();
-            session.endSession();
-            return res.status(400).json({ success: false, message: 'User already exists' });
+            return res.status(400).json({ 
+                success: false, 
+                message: 'User already exists' 
+            });
         }
 
         // Hash Password
-        const salt = await bcrypt.genSalt(10); // Method to generate a salt for the password
-        const hashedPassword = await bcrypt.hash(password, salt); // Method to hash the password
-        const newUsers = await UserModel.create([{ username, name, email, password: hashedPassword, role }], { session });
-
-        const token = jwt.sign({ id: newUsers[0]._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY }); // Method to generate a JWT token for the user
-        res.status(201).json({ success: true, message: 'User Registered Successfully!', data: { token, user: newUsers[0] } }); // Method to send the response to the client
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
         
-        await session.commitTransaction();
-        session.endSession();
+        const newUser = await UserModel.create({ 
+            username, 
+            name, 
+            email, 
+            password: hashedPassword, 
+            role: role || 'user' // Default to 'user' if no role provided
+        });
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: newUser._id }, 
+            'your-super-secret-jwt-key-change-this-in-production-12345'
+        );
+
+        res.status(201).json({ 
+            success: true, 
+            message: 'User Registered Successfully!', 
+            data: { 
+                token, 
+                user: {
+                    id: newUser._id,
+                    username: newUser.username,
+                    name: newUser.name,
+                    email: newUser.email,
+                    role: newUser.role
+                }
+            } 
+        });
 
     } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
         next(error);
     }
 };
@@ -40,50 +59,99 @@ export const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        if (!email && !password) {
-            return res.status(400).json({ success: false, message: 'Please provide email or password' });
+        if (!email || !password) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Please provide both email and password' 
+            });
         }
 
         const user = await UserModel.findOne({ email }).select('+password');
         
         if (!user) {
-            const error = new Error('User not found.');
-            error.statusCode = 404;
-            throw error;
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            const error = new Error('Invalid password.');
-            error.statusCode = 401;
-            throw error;
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid password'
+            });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
-        res.status(200).json({ success: true, message: 'User logged in successfully!', data: { token, user } });
+        const token = jwt.sign(
+            { id: user._id }, 
+            'your-super-secret-jwt-key-change-this-in-production-12345'
+        );
+
+        // ✅ IMPROVED: Don't send password in response
+        const userResponse = {
+            id: user._id,
+            username: user.username,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            avatar: user.avatar,
+            phone: user.phone,
+            createdAt: user.createdAt
+        };
+
+        res.status(200).json({ 
+            success: true, 
+            message: 'User logged in successfully!', 
+            data: { 
+                token, 
+                user: userResponse 
+            } 
+        });
 
     } catch (error) {
         next(error);
     }
-};      
+};
 
 export const logout = async (req, res, next) => {
     try {
-      const h = req.headers.authorization || '';
-      if (!h.startsWith('Bearer ')) return res.status(400).json({ success:false, message:'Missing token' });
-      const token = h.split(' ')[1];
-  
-      // prevent duplicate insert (optional)
-      const exists = await BlacklistedToken.findOne({ token }).lean();
-      if (exists) return res.status(400).json({ success:false, message:'Token is already blacklisted' });
-  
-      const decoded = jwt.decode(token);
-      const expMs = decoded?.exp ? decoded.exp * 1000 : (Date.now() + 7*24*60*60*1000);
-  
-      await BlacklistedToken.create({ token, reason: 'logout', expiresAt: new Date(expMs) });
-  
-      res.status(200).json({ success:true, message:'User logged out successfully!' });
+        const h = req.headers.authorization || '';
+        if (!h.startsWith('Bearer ')) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Missing token' 
+            });
+        }
+        
+        const token = h.split(' ')[1];
+
+        // Import BlacklistedToken model at the top if not already imported
+        // import BlacklistedToken from '../models/blacklistedToken.model.js';
+
+        // Prevent duplicate insert (optional)
+        const exists = await BlacklistedToken.findOne({ token }).lean();
+        if (exists) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Token is already blacklisted' 
+            });
+        }
+
+        const decoded = jwt.decode(token);
+        const expMs = decoded?.exp ? decoded.exp * 1000 : (Date.now() + 7*24*60*60*1000);
+
+        await BlacklistedToken.create({ 
+            token, 
+            reason: 'logout', 
+            expiresAt: new Date(expMs) 
+        });
+
+        res.status(200).json({ 
+            success: true, 
+            message: 'User logged out successfully!' 
+        });
     } catch (err) {
-      next(err);
+        next(err);
     }
-  };
+};

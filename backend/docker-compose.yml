@@ -1,6 +1,16 @@
 version: "3.8"
 
 services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    command: mongod --replSet rs0
+    restart: unless-stopped
+
   auth-service:
     build: ./auth-service
     container_name: auth-service
@@ -12,6 +22,8 @@ services:
       - DB_URI=${AUTH_DB_URI}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRES_IN=15m
+    depends_on:
+      - mongodb
     restart: unless-stopped
 
   user-service:
@@ -28,6 +40,8 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - S3_BUCKET=${S3_BUCKET}
+    depends_on:
+      - mongodb
     restart: unless-stopped
 
   issue-service:
@@ -45,6 +59,8 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - S3_BUCKET=${S3_BUCKET}
+    depends_on:
+      - mongodb
     restart: unless-stopped
 
   comments-service:
@@ -62,6 +78,8 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - S3_BUCKET=${S3_BUCKET}
+    depends_on:
+      - mongodb
     restart: unless-stopped
 
   analytics-service:
@@ -74,4 +92,9 @@ services:
       - NODE_ENV=production
       - DB_URI=${ANALYTICS_DB_URI}
       - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongodb
     restart: unless-stopped
+
+volumes:
+  mongodb_data:

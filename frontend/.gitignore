@@ -1,14 +1,23 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+
 # Environment variables
 .env
-.env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Dependencies
-node_modules/
-*/node_modules/
+.env.*.local
 
 # Logs
 logs
@@ -33,6 +42,7 @@ coverage/
 .nyc_output
 
 # Dependency directories
+node_modules/
 jspm_packages/
 
 # TypeScript cache
@@ -58,6 +68,15 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -98,18 +117,12 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Docker
-.dockerignore
+# Vite
+.vite/
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Build outputs
-build/
-dist/
-out/
+# Local development files
+.local/
+local/
 
 # Test coverage
 coverage/
@@ -120,58 +133,35 @@ coverage/
 *.bak
 *.tmp
 
-# SSL certificates
-*.pem
-*.key
-*.crt
-*.csr
+# Service worker
+sw.js
+sw.js.map
 
-# Local development files
-.local/
-local/
+# PWA files
+manifest.json
 
-# Docker volumes
-mongodb_data/
+# Bundle analyzer
+bundle-analyzer-report.html
 
-# IDE files
-*.sublime-project
-*.sublime-workspace
+# Webpack
+.webpack/
 
-# JetBrains IDEs
-.idea/
+# Rollup
+.rollup.cache/
 
-# Vim
-*.swp
-*.swo
-*~
+# ESLint
+.eslintcache
 
-# Emacs
-*~
-\#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
-.\#*
+# Prettier
+.prettierignore
 
-# MacOS
-.DS_Store
-.AppleDouble
-.LSOverride
+# Stylelint
+.stylelintcache
 
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
+# Husky
+.husky/_
 
-# Linux
-*~
-
-# Project specific
-backend/mongodb_data/
-backend/*/node_modules/
-frontend/*/node_modules/
-frontend/*/dist/
-frontend/*/build/
+# Lock files (uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

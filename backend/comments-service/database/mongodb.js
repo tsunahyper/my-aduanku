@@ -8,7 +8,10 @@ const connectDB = async () => {
   }
   try {
     mongoose.set('bufferCommands', false);
-    await mongoose.connect(DB_URI, { serverSelectionTimeoutMS: 15000 });
+    await mongoose.connect(DB_URI, { 
+      serverSelectionTimeoutMS: 15000,
+      retryWrites: false
+    });
     console.log(`MongoDB connected in ${NODE_ENV || 'development'} mode`);
   } catch (err) {
     console.error(`MongoDB connection error: ${err.message}`);

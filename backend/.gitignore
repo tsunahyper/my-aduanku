@@ -1,14 +1,17 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
 # Environment variables
 .env
-.env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Dependencies
-node_modules/
-*/node_modules/
+.env.*.local
 
 # Logs
 logs
@@ -16,7 +19,6 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 lerna-debug.log*
 
 # Runtime data
@@ -32,8 +34,24 @@ coverage/
 # nyc test coverage
 .nyc_output
 
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower dependency directory (https://bower.io/)
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
 # Dependency directories
+node_modules/
 jspm_packages/
+
+# TypeScript v1 declaration files
+typings/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -58,6 +76,15 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -120,6 +147,16 @@ coverage/
 *.bak
 *.tmp
 
+# Service-specific ignores
+auth-service/node_modules/
+user-service/node_modules/
+issue-service/node_modules/
+comments-service/node_modules/
+analytics-service/node_modules/
+
+# Docker volumes
+mongodb_data/
+
 # SSL certificates
 *.pem
 *.key
@@ -129,49 +166,3 @@ coverage/
 # Local development files
 .local/
 local/
-
-# Docker volumes
-mongodb_data/
-
-# IDE files
-*.sublime-project
-*.sublime-workspace
-
-# JetBrains IDEs
-.idea/
-
-# Vim
-*.swp
-*.swo
-*~
-
-# Emacs
-*~
-\#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
-.\#*
-
-# MacOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# Linux
-*~
-
-# Project specific
-backend/mongodb_data/
-backend/*/node_modules/
-frontend/*/node_modules/
-frontend/*/dist/
-frontend/*/build/
