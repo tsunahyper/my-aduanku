@@ -20,17 +20,17 @@ const Layout = ({ children }) => {
   const { user, logout } = useAuth();
 
   const navigation = [
-    { name: 'Dashboard', href: '/', icon: Home },
-    { name: 'Issues', href: '/issues', icon: AlertTriangle },
-    { name: 'Comments', href: '/comments', icon: MessageSquare },
-    { name: 'Users', href: '/users', icon: Users },
-    { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'Dashboard', href: '/dashboard', icon: Home },
+    { name: 'Issues', href: '/dashboard/issues', icon: AlertTriangle },
+    { name: 'Comments', href: '/dashboard/comments', icon: MessageSquare },
+    { name: 'Users', href: '/dashboard/users', icon: Users },
+    { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
+    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];
 
   const isActive = (path) => {
-    if (path === '/') {
-      return location.pathname === '/';
+    if (path === '/dashboard') {
+      return location.pathname === '/dashboard';
     }
     return location.pathname.startsWith(path);
   };

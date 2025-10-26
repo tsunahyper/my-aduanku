@@ -1,0 +1,140 @@
+version: "3.8"
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:latest
+    container_name: aduanku-mongodb-dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_dev:/data/db
+    command: mongod --replSet rs0
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+  # Backend Services (Development)
+  auth-service:
+    build: ./backend/auth-service
+    container_name: aduanku-auth-service-dev
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - NODE_ENV=development
+      - DB_URI=mongodb://mongodb:27017/aduanku_auth
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
+      - JWT_EXPIRES_IN=15m
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+  user-service:
+    build: ./backend/user-service
+    container_name: aduanku-user-service-dev
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - NODE_ENV=development
+      - DB_URI=mongodb://mongodb:27017/aduanku_users
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=your-aws-access-key
+      - AWS_SECRET_ACCESS_KEY=your-aws-secret-key
+      - S3_BUCKET=aduanku-uploads
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+  issue-service:
+    build: ./backend/issue-service
+    container_name: aduanku-issue-service-dev
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - NODE_ENV=development
+      - DB_URI=mongodb://mongodb:27017/aduanku_issues
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=your-aws-access-key
+      - AWS_SECRET_ACCESS_KEY=your-aws-secret-key
+      - S3_BUCKET=aduanku-uploads
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+  comments-service:
+    build: ./backend/comments-service
+    container_name: aduanku-comments-service-dev
+    ports:
+      - "5004:5004"
+    environment:
+      - PORT=5004
+      - NODE_ENV=development
+      - DB_URI=mongodb://mongodb:27017/aduanku_comments
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=your-aws-access-key
+      - AWS_SECRET_ACCESS_KEY=your-aws-secret-key
+      - S3_BUCKET=aduanku-uploads
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+  analytics-service:
+    build: ./backend/analytics-service
+    container_name: aduanku-analytics-service-dev
+    ports:
+      - "5005:5005"
+    environment:
+      - PORT=5005
+      - NODE_ENV=development
+      - DB_URI=mongodb://mongodb:27017/aduanku_analytics
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+  # Frontend Service (Development)
+  frontend:
+    build:
+      context: ./frontend/my-aduanku
+      dockerfile: Dockerfile.dev
+    container_name: aduanku-frontend-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/my-aduanku:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev -- --host 0.0.0.0
+    depends_on:
+      - auth-service
+      - user-service
+      - issue-service
+      - comments-service
+      - analytics-service
+    restart: unless-stopped
+    networks:
+      - aduanku-network
+
+volumes:
+  mongodb_data_dev:
+
+networks:
+  aduanku-network:
+    driver: bridge

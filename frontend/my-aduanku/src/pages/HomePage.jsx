@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { 
-  AlertTriangle, 
-  MessageSquare, 
-  Users, 
+import { useAuth } from '../contexts/AuthContext';
+import UserDashboard from '../pages/UserDashboard';
+import AdminDashboard from '../components/AdminDashboard';
+import {
+  AlertTriangle,
+  MessageSquare,
+  Users,
   BarChart3,
   TrendingUp,
   Clock,
@@ -13,6 +16,7 @@ import { AnalyticsService, apiUtils } from '../services/api';
 import './HomePage.css';
 
 const HomePage = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState({
     totalIssues: 0,
     totalUsers: 0,
@@ -23,6 +27,15 @@ const HomePage = () => {
   });
 
   const [loading, setLoading] = useState(true);
+
+  // Show appropriate dashboard based on user role
+  if (user) {
+    if (user.role === 'admin' || user.role === 'superadmin') {
+      return <AdminDashboard />;
+    } else {
+      return <UserDashboard />;
+    }
+  }
 
   useEffect(() => {
     // Fetch dashboard stats from API
