@@ -1,0 +1,64 @@
+/* Placeholder Page Styles */
+.page-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.placeholder-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.placeholder-icon {
+  color: #667eea;
+  margin-bottom: 1.5rem;
+}
+
+.placeholder-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 1rem 0;
+}
+
+.placeholder-content p {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin: 0 0 2rem 0;
+}
+
+.placeholder-features {
+  text-align: left;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.feature-item {
+  padding: 0.5rem 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.feature-item:not(:last-child) {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+@media (max-width: 640px) {
+  .page-placeholder {
+    padding: 1rem;
+  }
+  
+  .placeholder-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .placeholder-content p {
+    font-size: 1rem;
+  }
+}
