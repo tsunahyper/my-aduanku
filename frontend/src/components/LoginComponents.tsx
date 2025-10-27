@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { login } from '../api/login'
 
 const LoginComponents = ({ isAdmin, setShowLoginForm }: { isAdmin: boolean, setShowLoginForm: (showLoginForm: boolean) => void }) => {
-    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -29,11 +27,11 @@ const LoginComponents = ({ isAdmin, setShowLoginForm }: { isAdmin: boolean, setS
             if (isAdmin) {
                 await login(email, password, true)
                 setSuccess('Admin logged in successfully!')
-                setTimeout(() => navigate('/admin'), 1000)
+                setTimeout(() => window.location.reload(), 1000)
             } else {
                 await login(email, password, false)
                 setSuccess('User logged in successfully!')
-                setTimeout(() => navigate('/user'), 1000)
+                setTimeout(() => window.location.reload(), 1000)
             }
         } catch (error) {
             setError((error as Error).message)

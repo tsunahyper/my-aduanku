@@ -5,7 +5,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
 import { useAuth } from './hooks/useAuth';
 
-function App() {
+function AppContent() {
   const { isAuthenticated, userRole, isLoading } = useAuth();
 
   if (isLoading) {
@@ -22,36 +22,42 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <BrowserRouter>
-        <Routes>
-          <Route 
-            path="/admin" 
-            element={
-              userRole === 'admin'
-                ? <AdminDashboard /> 
-                : <Navigate to="/user" replace />
-            } 
-          />
-          <Route 
-            path="/user" 
-            element={
-              userRole === 'user' 
-                ? <UserDashboard /> 
-                : <Navigate to="/admin" replace />
-            } 
-          />
-          <Route 
-            path="/" 
-            element={
-              <Navigate 
-                to={userRole === 'admin'? '/admin' : '/user'} 
-                replace 
-              />
-            } 
-          />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route 
+          path="/admin" 
+          element={
+            userRole === 'admin'
+              ? <AdminDashboard /> 
+              : <Navigate to="/user" replace />
+          } 
+        />
+        <Route 
+          path="/user" 
+          element={
+            userRole === 'user' 
+              ? <UserDashboard /> 
+              : <Navigate to="/admin" replace />
+          } 
+        />
+        <Route 
+          path="/" 
+          element={
+            <Navigate 
+              to={userRole === 'admin'? '/admin' : '/user'} 
+              replace 
+            />
+          } 
+        />
+      </Routes>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
 

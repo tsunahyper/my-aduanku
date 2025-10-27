@@ -5,12 +5,19 @@ interface AuthState {
   isAuthenticated: boolean;
   userRole: string | null;
   isLoading: boolean;
+  logout: () => void;
 }
 
 export const useAuth = (): AuthState => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    setUserRole(null);
+  };
 
   useEffect(() => {
     const checkAuth = () => {
@@ -38,5 +45,5 @@ export const useAuth = (): AuthState => {
     checkAuth();
   }, []);
 
-  return { isAuthenticated, userRole, isLoading };
+  return { isAuthenticated, userRole, isLoading, logout };
 };
