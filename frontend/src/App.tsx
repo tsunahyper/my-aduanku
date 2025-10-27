@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
@@ -28,7 +27,7 @@ function App() {
           <Route 
             path="/admin" 
             element={
-              userRole === 'admin' || userRole === 'superadmin' 
+              userRole === 'admin'
                 ? <AdminDashboard /> 
                 : <Navigate to="/user" replace />
             } 
@@ -45,7 +44,7 @@ function App() {
             path="/" 
             element={
               <Navigate 
-                to={userRole === 'admin' || userRole === 'superadmin' ? '/admin' : '/user'} 
+                to={userRole === 'admin'? '/admin' : '/user'} 
                 replace 
               />
             } 
