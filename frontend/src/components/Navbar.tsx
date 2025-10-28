@@ -1,13 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import aduankuImg from '../assets/aduanku.png'
 import defaultPersonImg from '../assets/default-user-icon.png'
 
-const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
+interface NavbarProps {
+  isAdmin: boolean;
+  activeTab?: string;
+  setActiveTab?: (tab: string) => void;
+}
+
+const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActiveTab }: NavbarProps) => {
   const { logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Home');
+  const [localActiveTab, setLocalActiveTab] = useState('Dashboard');
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const activeTab = propActiveTab !== undefined ? propActiveTab : localActiveTab;
+  const setActiveTab = propSetActiveTab || setLocalActiveTab;
 
   const handleLogout = () => {
     logout();
@@ -113,46 +122,51 @@ const Navbar = ({ isAdmin }: { isAdmin: boolean }) => {
                 <button
                   onClick={() => setActiveTab('Dashboard')}
                   className={`${activeTab === 'Dashboard'
-                      ? 'bg-white text-black border rounded-xl'
-                      : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
+                    ? 'bg-white text-black border rounded-xl'
+                    : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
                     } p-2 cursor-pointer`}
                 >
                   Dashboard
                 </button>
               </li>
+
+              <li>
+                <button
+                  onClick={() => setActiveTab('User Management')}
+                  className={`${activeTab === 'User Management'
+                    ? 'bg-white text-black border rounded-xl'
+                    : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
+                    } p-2 cursor-pointer`}
+                >
+                  User Management
+                </button>
+              </li>
+              
               <li>
                 <button
                   onClick={() => setActiveTab('Issue Management')}
                   className={`${activeTab === 'Issue Management'
-                      ? 'bg-white text-black border rounded-xl'
-                      : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
+                    ? 'bg-white text-black border rounded-xl'
+                    : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
                     } p-2 cursor-pointer`}
                 >
                   Issue Management
                 </button>
               </li>
-              <li>
-                <button
-                  onClick={() => setActiveTab('Analytics & Statistics')}
-                  className={`${activeTab === 'Analytics & Statistics'
+
+              {isAdmin &&
+                <li>
+                  <button
+                    onClick={() => setActiveTab('Analytics & Statistics')}
+                    className={`${activeTab === 'Analytics & Statistics'
                       ? 'bg-white text-black border rounded-xl'
                       : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
-                    } p-2 cursor-pointer`}
-                >
-                  Analytics & Statistics
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => setActiveTab('Features')}
-                  className={`${activeTab === 'Features'
-                      ? 'bg-white text-black border rounded-xl'
-                      : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
-                    } p-2 cursor-pointer`}
-                >
-                  Features
-                </button>
-              </li>
+                      } p-2 cursor-pointer`}
+                  >
+                    Analytics & Statistics
+                  </button>
+                </li>
+              }
             </ul>
           </div>
         </div>

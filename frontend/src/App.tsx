@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import AdminDashboard from './pages/AdminDashboard';
-import UserDashboard from './pages/UserDashboard';
+import Admin from './pages/Admin';
+import User from './pages/User';
 import { useAuth } from './hooks/useAuth';
 
 function AppContent() {
@@ -34,7 +34,7 @@ function AppContent() {
           path="/admin"
           element={
             userRole === 'admin'
-              ? <AdminDashboard />
+              ? <Admin />
               : <Navigate to="/user" replace />
           }
         />
@@ -42,7 +42,7 @@ function AppContent() {
           path="/user"
           element={
             userRole === 'user'
-              ? <UserDashboard />
+              ? <User />
               : <Navigate to="/admin" replace />
           }
         />
@@ -64,7 +64,7 @@ function App() {
   return (
     <BrowserRouter>
       {/* <AppContent /> */}
-      <AdminDashboard></AdminDashboard>
+      <Admin></Admin>
     </BrowserRouter>
   );
 }
