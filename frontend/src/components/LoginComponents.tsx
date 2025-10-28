@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { login } from '../api/login'
 
-const LoginComponents = ({ isAdmin, setShowLoginForm }: { isAdmin: boolean, setShowLoginForm: (showLoginForm: boolean) => void }) => {
+const LoginComponents = ({ isAdmin, setShowLoginForm }: { isAdmin: boolean, setShowLoginForm: () => void }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -15,7 +15,7 @@ const LoginComponents = ({ isAdmin, setShowLoginForm }: { isAdmin: boolean, setS
         setShowPassword(!showPassword)
     }
     const handleBackToSelection = () => {
-        setShowLoginForm(false)
+        setShowLoginForm()
     }
 
     const handleLogin = async () => {

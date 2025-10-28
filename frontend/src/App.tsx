@@ -17,36 +17,43 @@ function AppContent() {
   }
 
   if (!isAuthenticated) {
-    return <Login />;
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/admin" element={<Login />} />
+        <Route path="/login/user" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Routes>
-        <Route 
-          path="/admin" 
+        <Route
+          path="/admin"
           element={
             userRole === 'admin'
-              ? <AdminDashboard /> 
+              ? <AdminDashboard />
               : <Navigate to="/user" replace />
-          } 
+          }
         />
-        <Route 
-          path="/user" 
+        <Route
+          path="/user"
           element={
-            userRole === 'user' 
-              ? <UserDashboard /> 
+            userRole === 'user'
+              ? <UserDashboard />
               : <Navigate to="/admin" replace />
-          } 
+          }
         />
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
-            <Navigate 
-              to={userRole === 'admin'? '/admin' : '/user'} 
-              replace 
+            <Navigate
+              to={userRole === 'admin'? '/admin' : '/user'}
+              replace
             />
-          } 
+          }
         />
       </Routes>
     </div>
@@ -56,7 +63,8 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      {/* <AppContent /> */}
+      <AdminDashboard></AdminDashboard>
     </BrowserRouter>
   );
 }
