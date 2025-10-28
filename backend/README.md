@@ -310,10 +310,7 @@ curl http://localhost:5005/health  # Analytics service
 
 ## 📈 Performance Features
 
-- **Database Indexing**: Optimized queries with proper indexes
 - **Geospatial Queries**: Efficient location-based searches
-- **Pagination**: Large dataset handling
-- **Caching**: Response caching for analytics
 - **Connection Pooling**: MongoDB connection optimization
 
 ## 🐳 Docker Support
@@ -342,20 +339,6 @@ cd analytics-service && npm test
 - **Status Codes**: Standard HTTP status codes
 - **Response Format**: JSON responses with consistent structure
 
-## 🔧 Development
-
-### Adding New Features
-1. Create feature branch
-2. Implement changes in appropriate service
-3. Add tests
-4. Update documentation
-5. Create pull request
-
-### Database Migrations
-- Use Mongoose schema updates
-- Handle backward compatibility
-- Test migrations in development
-
 ## 🚀 Deployment
 
 ### Production Checklist
@@ -368,9 +351,9 @@ cd analytics-service && npm test
 - [ ] Set up SSL certificates
 - [ ] Configure backup strategies
 
-## 📞 Support
+## 𖢥 Troubleshoot
 
-For issues and questions:
+For troubleshooting issues:
 - Check service health endpoints
 - Review logs for error details
 - Verify environment configuration
