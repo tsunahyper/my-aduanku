@@ -1,4 +1,4 @@
-const DOMAIN = process.env.BACKEND_DOMAIN || 'http://localhost:5001/api/v1'
+const DOMAIN = process.env.REACT_APP_BACKEND_DOMAIN || 'http://localhost:5001/api/v1'
 
 export async function login(email: string, password: string, isAdmin: boolean) {
         const response = await fetch(`${DOMAIN}/auth/${isAdmin ? 'admin' : 'user'}/login`, {

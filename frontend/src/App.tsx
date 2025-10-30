@@ -31,7 +31,7 @@ function AppContent() {
     <div className="min-h-screen bg-gray-100">
       <Routes>
         <Route
-          path="/admin"
+          path="/admin/dashboard"
           element={
             userRole === 'admin'
               ? <Admin />
@@ -39,7 +39,7 @@ function AppContent() {
           }
         />
         <Route
-          path="/user"
+          path="/user/dashboard"
           element={
             userRole === 'user'
               ? <User />
@@ -47,10 +47,10 @@ function AppContent() {
           }
         />
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <Navigate
-              to={userRole === 'admin'? '/admin' : '/user'}
+              to={userRole === 'admin'? '/admin/dashboard' : '/user/dashboard'}
               replace
             />
           }
@@ -63,8 +63,8 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      {/* <AppContent /> */}
-      <Admin></Admin>
+      <AppContent />
+      {/* <Admin/> */}
     </BrowserRouter>
   );
 }
