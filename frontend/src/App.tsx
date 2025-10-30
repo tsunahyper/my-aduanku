@@ -63,8 +63,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
-      {/* <Admin/> */}
+      {/* <AppContent /> */}
+      <Admin/>
+      {/* <User/> */}
     </BrowserRouter>
   );
 }
