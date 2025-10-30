@@ -111,17 +111,19 @@ services:
   # Frontend Service (Development)
   frontend:
     build:
-      context: ./frontend/my-aduanku
+      context: ./frontend
       dockerfile: Dockerfile.dev
     container_name: aduanku-frontend-dev
     ports:
-      - "5173:5173"
+      - "3001:3000"
     volumes:
-      - ./frontend/my-aduanku:/app
+      - ./frontend:/app
       - /app/node_modules
     environment:
       - NODE_ENV=development
-    command: npm run dev -- --host 0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_BACKEND_DOMAIN=http://aduanku-auth-service-dev:5001/api/v1
+    command: npm start
     depends_on:
       - auth-service
       - user-service
