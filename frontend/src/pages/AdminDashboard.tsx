@@ -1,8 +1,10 @@
-import React from "react"
+import StatusCard from "../components/StatusCard"
 import viewUserIcon from '../assets/view-user.png'
 import addUserIcon from '../assets/add-user.png'
-import warningIcon from '../assets/warning-icon.png'
-import StatusCard from "../components/StatusCard"
+import checkCircleIcon from '@heroicons/react/24/outline/CheckCircleIcon'
+import chatBubbleBottomCenterTextIcon from '@heroicons/react/24/outline/ChatBubbleBottomCenterTextIcon'
+import exclamationTriangleIcon from '@heroicons/react/24/outline/ExclamationTriangleIcon'
+import userGroupIcon from '@heroicons/react/24/outline/UserGroupIcon'
 
 const AdminDashboard = () => {
   return (
@@ -25,30 +27,38 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-6 p-4 w-full">
+      <div className="grid grid-cols-2 gap-4 p-4 w-full">
         <StatusCard 
-          icon={warningIcon}
+          icon={exclamationTriangleIcon}
           numberOfRecords={1247}
-          totalRecords={'Total Issue'}
+          totalRecords={'Total Number of Issues'}
           percentageRecords={'+12'}
+          alt={'total-issues'}
+          statusColor={'red'}
         />
         <StatusCard 
-          icon={warningIcon}
+          icon={userGroupIcon}
           numberOfRecords={1247}
-          totalRecords={'Total Issue'}
-          percentageRecords={'+12'}
+          totalRecords={'Total Number of Users'}
+          percentageRecords={''}
+          alt={'total-users'}
+          statusColor={'blue'}
         />
         <StatusCard 
-          icon={warningIcon}
+          icon={chatBubbleBottomCenterTextIcon}
           numberOfRecords={1247}
-          totalRecords={'Total Issue'}
+          totalRecords={'Total Number of Comments'}
           percentageRecords={'+12'}
+          alt={'total-comments'}
+          statusColor={'purple'}
         />
         <StatusCard 
-          icon={warningIcon}
+          icon={checkCircleIcon}
           numberOfRecords={1247}
-          totalRecords={'Total Issue'}
+          totalRecords={'Total Number of Issues Resolved'}
           percentageRecords={'+12'}
+          alt={'total-issues-resolved'}
+          statusColor={'green'}
         />
       </div>
     </div>

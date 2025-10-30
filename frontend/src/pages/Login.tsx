@@ -55,7 +55,6 @@ const Login = () => {
                 <div>
                     <LoginComponents
                         isAdmin={isAdmin}
-                        setShowLoginForm={() => navigate(isAdmin ? '/login/admin' : '/login/user')}
                     />
                 </div>
             )}

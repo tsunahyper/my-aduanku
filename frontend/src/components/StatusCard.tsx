@@ -1,31 +1,37 @@
-import React from 'react'
-
-interface StatusProps{
-    icon: any,
-    numberOfRecords: number,
-    totalRecords: string,
-    percentageRecords: string
+interface StatusProps {
+  icon: any,
+  numberOfRecords: number,
+  totalRecords: string,
+  percentageRecords: string,
+  alt: string,
+  statusColor: string
 }
 
-const StatusCard = ({icon, numberOfRecords, totalRecords, percentageRecords}:StatusProps) => {
+const StatusCard = ({ icon, numberOfRecords, totalRecords, percentageRecords, alt, statusColor }: StatusProps) => {
+
+  const Icon = icon;
+  const color = statusColor;
+  const percentageColor = percentageRecords.includes('+') ? 'green' : percentageRecords.includes('-') ? 'red' : '';
+
   return (
     <div>
-        <div className="flex flex-row gap-4 items-center border border-gray-300 bg-white rounded-md p-8 justify-center">
-          <div className="border border-blue-500 rounded-md bg-blue-600 p-1 w-12 h-12 flex items-center justify-center">
-            <img className="h-8 w-8" src={icon} alt="warning-icon" />
-          </div>
-          <div className="flex flex-col gap-1 items-center">
-            <div className="text-3xl font-bold">
-              {numberOfRecords}
-            </div>
-            <div className="text-xs text-gray-500">
-              {totalRecords}
-            </div>
-            <div className="border border-green-400 rounded-md text-green-700 font-semibold text-xs bg-green-200 p-1">
-              {percentageRecords}%
-            </div>
-          </div>
+      <div className="h-[152px] flex flex-row gap-5 items-center border border-gray-300 bg-white rounded-md p-8 justify-center">
+        <div className={`border border-${color}-500 rounded-md bg-${color}-600 p-1 w-12 h-12 flex items-center justify-center`}>
+          <Icon className="w-7 h-7 text-white" />
         </div>
+        <div className="flex flex-col gap-1 items-center">
+          <div className="text-3xl font-bold">
+            {numberOfRecords}
+          </div>
+          <div className="text-xs text-gray-500">
+            {totalRecords}
+          </div>
+          { percentageColor !== '' ? (
+          <div className={`border border-${percentageColor}-400 rounded-md text-${percentageColor}-700 font-semibold text-xs bg-${percentageColor}-200 p-1`}>
+            {percentageRecords}%
+          </div>): null}
+        </div>
+      </div>
     </div>
   )
 }
