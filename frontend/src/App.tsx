@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Admin from './pages/Admin';
 import User from './pages/User';
 import { useAuth } from './hooks/useAuth';
+import AddUserPopup from './pages/popup/addUser';
 
 function AppContent() {
   const { isAuthenticated, userRole, isLoading } = useAuth();
@@ -63,8 +64,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      {/* <AppContent /> */}
-      <Admin/>
+      <AppContent />
+      {/* <Admin/> */}
+      {/* <AddUserPopup /> */}
       {/* <User/> */}
     </BrowserRouter>
   );

@@ -15,8 +15,8 @@ const StatusCard = ({ icon, numberOfRecords, totalRecords, percentageRecords, al
 
   return (
     <div>
-      <div className="h-[152px] flex flex-row gap-5 items-center border border-gray-300 bg-white rounded-md p-8 justify-center">
-        <div className={`border border-${color}-500 rounded-md bg-${color}-600 p-1 w-12 h-12 flex items-center justify-center`}>
+      <div className="h-[152px] flex flex-row gap-5 items-center border border-gray-300 bg-white rounded-md p-8 justify-center hover:bg-gray-100 cursor-pointer">
+        <div className={`border border-${color}-500 rounded-md bg-${color}-600 p-1 w-11 h-11 flex items-center justify-center`}>
           <Icon className="w-7 h-7 text-white" />
         </div>
         <div className="flex flex-col gap-1 items-center">
