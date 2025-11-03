@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react"
+import { useState } from "react"
 import UserManagementTable from "./components/UserManagementTable"
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import { getUsers } from "../../api/users"
 import AddUserPopup from "./popups/addUser"
 
 const UserManagement = () => {

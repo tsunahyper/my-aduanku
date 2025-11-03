@@ -8,13 +8,17 @@ import cors from 'cors';
 
 const app = express();
 
-// CORS configuration
+// CORS configuration - Allow all origins in development for Docker compatibility
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001'],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  }));
+	origin: process.env.NODE_ENV === 'production' 
+		? ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001']
+		: true, // Allow all origins in development
+	credentials: true,
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+	exposedHeaders: ['Content-Range', 'X-Content-Range'],
+	optionsSuccessStatus: 200
+}));
 
 app.use(express.json()); // Parses incoming requests with JSON payloads and is based on the body-parser library.
 app.use(express.urlencoded({ extended: false })); // Parses incoming requests with URL-encoded payloads and is based on the body-parser library.

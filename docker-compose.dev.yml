@@ -40,7 +40,7 @@ services:
     environment:
       - PORT=5002
       - NODE_ENV=development
-      - DB_URI=mongodb://mongodb:27017/aduanku_users
+      - DB_URI=mongodb://mongodb:27017/aduanku_auth
       - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
       - AWS_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=your-aws-access-key
@@ -60,7 +60,7 @@ services:
     environment:
       - PORT=5003
       - NODE_ENV=development
-      - DB_URI=mongodb://mongodb:27017/aduanku_issues
+      - DB_URI=mongodb://mongodb:27017/aduanku_auth
       - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
       - AWS_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=your-aws-access-key
@@ -80,7 +80,7 @@ services:
     environment:
       - PORT=5004
       - NODE_ENV=development
-      - DB_URI=mongodb://mongodb:27017/aduanku_comments
+      - DB_URI=mongodb://mongodb:27017/aduanku_auth
       - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
       - AWS_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=your-aws-access-key
@@ -100,7 +100,7 @@ services:
     environment:
       - PORT=5005
       - NODE_ENV=development
-      - DB_URI=mongodb://mongodb:27017/aduanku_analytics
+      - DB_URI=mongodb://mongodb:27017/aduanku_auth
       - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-12345
     depends_on:
       - mongodb

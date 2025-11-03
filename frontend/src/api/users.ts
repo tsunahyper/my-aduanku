@@ -52,11 +52,17 @@ export const getUsers = async (page: number = 1, limit: number = 10, filters?: {
       throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
     }
     
-    const data = await response.json()
-    return { success: true, message: 'Users fetched successfully', data: data }
-  } catch (error) {
+    const responseData = await response.json()
+    // Backend returns: { success: true, data: { users: [...], pagination: {...} } }
+    // Return it directly so component can access data.data.users
+    return responseData
+  } catch (error: any) {
     console.error('Error fetching users:', error)
-    return { success: false, message: 'Error fetching users', data: null }
+    return { 
+      success: false, 
+      message: error.message || 'Error fetching users', 
+      data: null 
+    }
   }
 }
 
