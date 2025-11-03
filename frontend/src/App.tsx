@@ -1,10 +1,10 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
 import User from './pages/User';
 import { useAuth } from './hooks/useAuth';
-import AddUserPopup from './pages/popup/addUser';
 
 function AppContent() {
   const { isAuthenticated, userRole, isLoading } = useAuth();
@@ -65,9 +65,17 @@ function App() {
   return (
     <BrowserRouter>
       <AppContent />
-      {/* <Admin/> */}
-      {/* <AddUserPopup /> */}
-      {/* <User/> */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </BrowserRouter>
   );
 }

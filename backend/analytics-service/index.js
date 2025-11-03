@@ -4,8 +4,17 @@ import cookieParser from 'cookie-parser';
 import connectDB from './database/mongodb.js';
 import AnalyticsRouter from './routes/analytics.router.js';
 import errorMiddleware from './middlewares/error.middleware.js';
+import cors from 'cors';
 
 const app = express();
+
+// CORS configuration
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 
 app.use(express.json()); // Parses incoming requests with JSON payloads and is based on the body-parser library.
 app.use(express.urlencoded({ extended: false })); // Parses incoming requests with URL-encoded payloads and is based on the body-parser library.

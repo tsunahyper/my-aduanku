@@ -61,6 +61,11 @@ export const getUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         
+        // Validate MongoDB ObjectId format to prevent query parameter confusion
+        if (!userId || !/^[0-9a-fA-F]{24}$/.test(userId)) {
+            throw new BadRequestError('Invalid user ID format');
+        }
+        
         // Check permissions
         if (req.user._id.toString() !== userId && req.user.role !== 'admin' && req.user.role !== 'superadmin') {
             throw new ForbiddenError('You are not authorized to access this resource');

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
-import AdminDashboard from './AdminDashboard'
-import IssueManagementContent from './IssueManagement'
-import AnalyticsContent from './Analytics'
-import UserManagement from './UserManagement'
+import { AdminDashboard } from '../modules/dashboard'
+import { IssueManagement } from '../modules/issues'
+import { Analytics } from '../modules/analytics'
+import { UserManagement } from '../modules/users'
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState('Dashboard')
@@ -13,9 +13,9 @@ const Admin = () => {
       case 'Dashboard':
         return <AdminDashboard />
       case 'Issue Management':
-        return <IssueManagementContent />
+        return <IssueManagement />
       case 'Analytics & Statistics':
-        return <AnalyticsContent />
+        return <Analytics />
       case 'User Management':
         return <UserManagement />
       default:

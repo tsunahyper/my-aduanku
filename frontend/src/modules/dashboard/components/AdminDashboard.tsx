@@ -1,6 +1,6 @@
-import StatusCard from "../components/StatusCard"
-import viewUserIcon from '../assets/view-user.png'
-import addUserIcon from '../assets/add-user.png'
+import StatusCard from "../../../components/StatusCard"
+import viewUserIcon from '../../../assets/view-user.png'
+import addUserIcon from '../../../assets/add-user.png'
 import checkCircleIcon from '@heroicons/react/24/outline/CheckCircleIcon'
 import chatBubbleBottomCenterTextIcon from '@heroicons/react/24/outline/ChatBubbleBottomCenterTextIcon'
 import exclamationTriangleIcon from '@heroicons/react/24/outline/ExclamationTriangleIcon'
@@ -66,3 +66,4 @@ const AdminDashboard = () => {
 }
 
 export default AdminDashboard
+
