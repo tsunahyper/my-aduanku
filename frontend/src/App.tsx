@@ -29,14 +29,14 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 w-full">
       <Routes>
         <Route
           path="/admin/dashboard"
           element={
-            userRole === 'admin'
+            userRole === 'admin' || userRole === 'superadmin'
               ? <Admin />
-              : <Navigate to="/user" replace />
+              : <Navigate to="/user/dashboard" replace />
           }
         />
         <Route
@@ -44,14 +44,23 @@ function AppContent() {
           element={
             userRole === 'user'
               ? <User />
-              : <Navigate to="/admin" replace />
+              : <Navigate to="/admin/dashboard" replace />
           }
         />
         <Route
           path="/dashboard"
           element={
             <Navigate
-              to={userRole === 'admin'? '/admin/dashboard' : '/user/dashboard'}
+              to={userRole === 'admin' || userRole === 'superadmin' ? '/admin/dashboard' : '/user/dashboard'}
+              replace
+            />
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={userRole === 'admin' || userRole === 'superadmin' ? '/admin/dashboard' : '/user/dashboard'}
               replace
             />
           }

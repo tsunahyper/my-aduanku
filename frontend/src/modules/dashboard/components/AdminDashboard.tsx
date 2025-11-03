@@ -1,10 +1,12 @@
 import StatusCard from "../../../components/StatusCard"
 import viewUserIcon from '../../../assets/view-user.png'
 import addUserIcon from '../../../assets/add-user.png'
-import checkCircleIcon from '@heroicons/react/24/outline/CheckCircleIcon'
-import chatBubbleBottomCenterTextIcon from '@heroicons/react/24/outline/ChatBubbleBottomCenterTextIcon'
-import exclamationTriangleIcon from '@heroicons/react/24/outline/ExclamationTriangleIcon'
-import userGroupIcon from '@heroicons/react/24/outline/UserGroupIcon'
+import { 
+  CheckCircleIcon, 
+  ChatBubbleLeftRightIcon, 
+  ExclamationTriangleIcon, 
+  UsersIcon 
+} from '@heroicons/react/24/solid'
 
 const AdminDashboard = () => {
   return (
@@ -29,7 +31,7 @@ const AdminDashboard = () => {
       </div>
       <div className="grid grid-cols-2 gap-4 p-4 w-full">
         <StatusCard 
-          icon={exclamationTriangleIcon}
+          icon={<ExclamationTriangleIcon className="w-7 h-7 text-white" />}
           numberOfRecords={1247}
           totalRecords={'Total Number of Issues'}
           percentageRecords={'+12'}
@@ -37,7 +39,7 @@ const AdminDashboard = () => {
           statusColor={'red'}
         />
         <StatusCard 
-          icon={userGroupIcon}
+          icon={<UsersIcon className="w-7 h-7 text-white" />}
           numberOfRecords={1247}
           totalRecords={'Total Number of Users'}
           percentageRecords={''}
@@ -45,7 +47,7 @@ const AdminDashboard = () => {
           statusColor={'blue'}
         />
         <StatusCard 
-          icon={chatBubbleBottomCenterTextIcon}
+          icon={<ChatBubbleLeftRightIcon className="w-7 h-7 text-white" />}
           numberOfRecords={1247}
           totalRecords={'Total Number of Comments'}
           percentageRecords={'+12'}
@@ -53,7 +55,7 @@ const AdminDashboard = () => {
           statusColor={'purple'}
         />
         <StatusCard 
-          icon={checkCircleIcon}
+          icon={<CheckCircleIcon className="w-7 h-7 text-white" />}
           numberOfRecords={1247}
           totalRecords={'Total Number of Issues Resolved'}
           percentageRecords={'+12'}

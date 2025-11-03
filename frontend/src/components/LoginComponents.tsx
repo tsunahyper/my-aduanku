@@ -30,12 +30,16 @@ const LoginComponents = ({ isAdmin }: { isAdmin: boolean }) => {
                 await login(email, password, true)
                 setSuccess('Admin logged in successfully!')
                 window.dispatchEvent(new Event('authChange'))
-                setTimeout(() => navigate('/admin/dashboard'), 1500)
+                setTimeout(() => {
+                    navigate('/admin/dashboard', { replace: true })
+                }, 500)
             } else {
                 await login(email, password, false)
                 setSuccess('User logged in successfully!')
                 window.dispatchEvent(new Event('authChange'))
-                setTimeout(() => navigate('/user/dashboard'), 1500)
+                setTimeout(() => {
+                    navigate('/user/dashboard', { replace: true })
+                }, 500)
             }
         } catch (error) {
             setError((error as Error).message)
@@ -46,8 +50,8 @@ const LoginComponents = ({ isAdmin }: { isAdmin: boolean }) => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-            <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md w-1/2 h-1/2">
+        <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-100">
+            <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 {/* Loading Spinner */}
                 {loading && <div className="flex items-center justify-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mb-4"></div>

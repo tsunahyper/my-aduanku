@@ -3,97 +3,6 @@ import { getUsers } from '../../../api/users'
 import { toast } from 'react-toastify'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 
-
-// Sample
-// {
-//   "success": true,
-//   "data": {
-//       "users": [
-//           {
-//               "address": {
-//                   "country": "Malaysia"
-//               },
-//               "_id": "6908ce2ab8c654000521c88d",
-//               "username": "john.doe",
-//               "name": "John Doe",
-//               "email": "john.doe@example.com",
-//               "role": "user",
-//               "isActive": true,
-//               "categoriesHandled": [],
-//               "createdAt": "2025-11-03T15:45:46.662Z",
-//               "updatedAt": "2025-11-03T15:45:46.662Z",
-//               "__v": 0
-//           },
-//           {
-//               "address": {
-//                   "country": "Malaysia"
-//               },
-//               "_id": "68ff77060f5443a540fb46ce",
-//               "username": "superadmin",
-//               "name": "Super Admin",
-//               "email": "superadmin@example.com",
-//               "role": "superadmin",
-//               "isActive": true,
-//               "categoriesHandled": [],
-//               "createdAt": "2025-10-27T13:43:34.727Z",
-//               "updatedAt": "2025-10-27T13:43:34.727Z",
-//               "__v": 0
-//           },
-//           {
-//               "address": {
-//                   "country": "Malaysia"
-//               },
-//               "_id": "68ff77020f5443a540fb46cb",
-//               "username": "haziq",
-//               "name": "Haziq",
-//               "email": "haziq.azli@example.com",
-//               "role": "user",
-//               "isActive": true,
-//               "categoriesHandled": [],
-//               "createdAt": "2025-10-27T13:43:30.889Z",
-//               "updatedAt": "2025-10-27T13:43:30.889Z",
-//               "__v": 0
-//           },
-//           {
-//               "address": {
-//                   "country": "Malaysia"
-//               },
-//               "_id": "68ff76fc0f5443a540fb46c8",
-//               "username": "admin",
-//               "name": "Admin User",
-//               "email": "admin@example.com",
-//               "role": "admin",
-//               "isActive": true,
-//               "categoriesHandled": [],
-//               "createdAt": "2025-10-27T13:43:24.912Z",
-//               "updatedAt": "2025-10-27T13:43:24.912Z",
-//               "__v": 0
-//           },
-//           {
-//               "address": {
-//                   "country": "Malaysia"
-//               },
-//               "_id": "68ff73ea53ab0645be94cff8",
-//               "username": "testuser",
-//               "name": "Test User",
-//               "email": "testuser@example.com",
-//               "role": "user",
-//               "isActive": true,
-//               "categoriesHandled": [],
-//               "createdAt": "2025-10-27T13:30:18.199Z",
-//               "updatedAt": "2025-10-27T13:30:18.199Z",
-//               "__v": 0
-//           }
-//       ],
-//       "pagination": {
-//           "currentPage": 1,
-//           "totalPages": 1,
-//           "totalItems": 5,
-//           "itemsPerPage": 10
-//       }
-//   }
-// }
-
 const UserManagementTable = () => {
     const [users, setUsers] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
@@ -105,7 +14,6 @@ const UserManagementTable = () => {
                 setLoading(true)
                 const response = await getUsers(1, 10)
                 if (response.success && response.data) {
-                    // Backend response structure: { success: true, data: { users: [...], pagination: {...} } }
                     setUsers(response.data.users || [])
                     setPagination(response.data.pagination || null)
                 } else {

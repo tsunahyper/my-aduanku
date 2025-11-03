@@ -130,17 +130,19 @@ const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActive
                 </button>
               </li>
 
-              <li>
-                <button
-                  onClick={() => setActiveTab('User Management')}
-                  className={`${activeTab === 'User Management'
-                    ? 'bg-white text-black border rounded-xl'
-                    : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
-                    } p-2 cursor-pointer`}
-                >
-                  User Management
-                </button>
-              </li>
+              {isAdmin && (
+                <li>
+                  <button
+                    onClick={() => setActiveTab('User Management')}
+                    className={`${activeTab === 'User Management'
+                      ? 'bg-white text-black border rounded-xl'
+                      : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
+                      } p-2 cursor-pointer`}
+                  >
+                    User Management
+                  </button>
+                </li>
+              )}
               
               <li>
                 <button
