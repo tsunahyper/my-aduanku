@@ -7,8 +7,36 @@ import {
   ExclamationTriangleIcon, 
   UsersIcon 
 } from '@heroicons/react/24/solid'
+import { getTotalIssues } from "../../../api/issues"
+import { useEffect, useState } from "react"
+import { getTotalUsers } from "../../../api/users"
+import { useNavigate } from "react-router-dom"
 
 const AdminDashboard = () => {
+  const navigate = useNavigate()
+  const [totalIssues, setTotalIssues] = useState<any>(null)
+  const [totalUsers, setTotalUsers] = useState<any>(null)
+  // const [comments, setComments] = useState<any>(null)
+  // const [issuesResolved, setIssuesResolved] = useState<any>(null)
+
+  useEffect(() => {
+    getTotalIssues().then((data: any) => {
+      setTotalIssues(data)
+    }).catch((error: any) => {
+      console.error('Error fetching total issues:', error)
+      setTotalIssues(0)
+    })
+
+    getTotalUsers().then((data: any) => {
+      setTotalUsers(data)
+    }).catch((error: any) => {
+      console.error('Error fetching total users:', error)
+      setTotalUsers(0)
+    })
+
+  }, [])
+
+
   return (
     <div className="flex flex-col gap-8">
       <div className="border-4 border-dashed border-gray-200 rounded-lg h-60 flex items-center justify-center">
@@ -18,13 +46,13 @@ const AdminDashboard = () => {
             <p className="text-gray-600">Welcome to the admin panel. View your overview and statistics here.</p>
           </div>
           <div className="flex flex-row gap-6 items-center justify-center">
-            <div className="flex flex-row items-center gap-2 bg-blue-500 border border-transparent rounded-lg p-2 px-4 text-white font-mono font-semibold hover:bg-blue-600 cursor-pointer">
+            <div onClick={() => navigate('/admin/user-management')} className="flex flex-row items-center gap-2 bg-blue-500 border border-transparent rounded-lg p-2 px-4 text-white font-mono font-semibold hover:bg-blue-700 cursor-pointer">
               <img src={viewUserIcon} alt="view-user" className="w-5 h-5" />
               View User
             </div>
-            <div className="flex flex-row items-center gap-2 bg-red-500 border border-gray-300 rounded-lg p-2 px-4 text-white font-mono font-semibold hover:bg-red-600 cursor-pointer">
+            <div onClick={() => navigate('/admin/user-management')} className="flex flex-row items-center gap-2 bg-red-500 border border-gray-300 rounded-lg p-2 px-4 text-white font-mono font-semibold hover:bg-red-700 cursor-pointer">
               <img src={addUserIcon} alt="view-user" className="w-6 h-6" />
-              + Add User
+              Add User
             </div>
           </div>
         </div>
@@ -32,7 +60,7 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-2 gap-4 p-4 w-full">
         <StatusCard 
           icon={<ExclamationTriangleIcon className="w-7 h-7 text-white" />}
-          numberOfRecords={1247}
+          numberOfRecords={totalIssues}
           totalRecords={'Total Number of Issues'}
           percentageRecords={'+12'}
           alt={'total-issues'}
@@ -40,9 +68,9 @@ const AdminDashboard = () => {
         />
         <StatusCard 
           icon={<UsersIcon className="w-7 h-7 text-white" />}
-          numberOfRecords={1247}
+          numberOfRecords={totalUsers}
           totalRecords={'Total Number of Users'}
-          percentageRecords={''}
+          percentageRecords={'+12'}
           alt={'total-users'}
           statusColor={'blue'}
         />

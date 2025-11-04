@@ -32,7 +32,7 @@ function AppContent() {
     <div className="min-h-screen bg-gray-100 w-full">
       <Routes>
         <Route
-          path="/admin/dashboard"
+          path="/admin/*"
           element={
             userRole === 'admin' || userRole === 'superadmin'
               ? <Admin />
@@ -40,7 +40,7 @@ function AppContent() {
           }
         />
         <Route
-          path="/user/dashboard"
+          path="/user/*"
           element={
             userRole === 'user'
               ? <User />

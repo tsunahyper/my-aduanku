@@ -1,7 +1,7 @@
 import { useState } from "react"
 import UserManagementTable from "./components/UserManagementTable"
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import AddUserPopup from "./popups/addUser"
+import AddUserPopup from "./popups/AddUser"
 
 const UserManagement = () => {
   const [isAddUserPopupOpen, setIsAddUserPopupOpen] = useState(false)
@@ -15,9 +15,12 @@ const UserManagement = () => {
             <p className="text-gray-600">Welcome to the user management panel. View and manage users here.</p>
           </div>
           <div className="flex flex-row gap-6 items-center justify-center">
-            <div className="flex flex-row items-center gap-2 bg-red-500 border border-gray-300 rounded-lg p-2 px-4 text-white font-mono font-semibold hover:bg-red-600 cursor-pointer">
+            <div 
+              onClick={() => setIsAddUserPopupOpen(!isAddUserPopupOpen)} 
+              className="flex flex-row items-center gap-2 bg-red-500 border border-gray-300 rounded-lg p-2 px-4 text-white font-mono font-semibold hover:bg-red-600 cursor-pointer"
+            >
               <PlusCircleIcon className="w-6 h-6" />
-              <div onClick={() => setIsAddUserPopupOpen(!isAddUserPopupOpen)} className="cursor-pointer">
+              <div className="cursor-pointer">
                 Add User
               </div>
               {isAddUserPopupOpen && <AddUserPopup onClose={() => setIsAddUserPopupOpen(false)} />}

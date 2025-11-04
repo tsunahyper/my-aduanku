@@ -1,16 +1,15 @@
-import React from 'react'
-import AddUserForms from './AddUserForms'
+import AddIssueForms from './AddIssueForms'
 
-interface AddUserPopupProps {
+interface AddIssuePopupProps {
   onClose?: () => void
 }
 
-const AddUserPopup = ({ onClose }: AddUserPopupProps) => { 
+const AddIssuePopup = ({ onClose }: AddIssuePopupProps) => { 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={onClose}>
       <div className="flex flex-col gap-8 bg-white p-8 rounded-lg shadow-lg w-1/2 max-h-[600px] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex flex-col gap-4 items-center justify-center">
-          <h2 className="text-2xl font-bold text-black">New User Forms</h2>
+          <h2 className="text-2xl font-bold text-black">New Issue Forms</h2>
           {onClose && (
             <button 
               onClick={onClose}
@@ -20,10 +19,10 @@ const AddUserPopup = ({ onClose }: AddUserPopupProps) => {
             </button>
           )}
         </div>
-        <AddUserForms onClose={onClose} />
+        <AddIssueForms onClose={onClose} />
       </div>
     </div>
   );
 };
 
-export default AddUserPopup;
+export default AddIssuePopup;

@@ -2,16 +2,17 @@ import React from 'react'
 
 interface StatusProps {
   icon: React.ReactNode,
-  numberOfRecords: number,
+  numberOfRecords: number | null,
   totalRecords: string,
-  percentageRecords: string,
+  percentageRecords: string | number | null,
   alt: string,
   statusColor: string
 }
 
 const StatusCard = ({ icon, numberOfRecords, totalRecords, percentageRecords, alt, statusColor }: StatusProps) => {
-  const hasPlus = percentageRecords.includes('+')
-  const hasMinus = percentageRecords.includes('-')
+  const pctString = percentageRecords != null ? String(percentageRecords) : ''
+  const hasPlus = pctString.includes('+')
+  const hasMinus = pctString.includes('-')
   const percentageColor = hasPlus ? 'green' : hasMinus ? 'red' : 'yellow'
 
   const colorMap: Record<string, { bg: string; border: string }> = {
@@ -39,7 +40,7 @@ const StatusCard = ({ icon, numberOfRecords, totalRecords, percentageRecords, al
         </div>
         <div className="flex flex-col gap-1 items-center">
           <div className="text-3xl font-bold">
-            {numberOfRecords}
+            {numberOfRecords ?? 0}
           </div>
           <div className="text-xs text-gray-500">
             {totalRecords}

@@ -22,12 +22,13 @@ export const addUsers = async (user: any, role: string) => {
   }
 }
 
-export const getUsers = async (page: number = 1, limit: number = 10, filters?: { role?: string, isActive?: boolean, search?: string }) => {
+export const getUsers = async (props: any = {}) => {
+  const { page, limit, filters } = props
   try {
-    const queryParams = new URLSearchParams({
-      page: page.toString(),
-      limit: limit.toString(),
-    })
+    const queryParams = new URLSearchParams()
+    
+    if (page !== undefined) queryParams.append('page', page.toString())
+    if (limit !== undefined) queryParams.append('limit', limit.toString())
     
     if (filters?.role) {
       queryParams.append('role', filters.role)
@@ -53,8 +54,6 @@ export const getUsers = async (page: number = 1, limit: number = 10, filters?: {
     }
     
     const responseData = await response.json()
-    // Backend returns: { success: true, data: { users: [...], pagination: {...} } }
-    // Return it directly so component can access data.data.users
     return responseData
   } catch (error: any) {
     console.error('Error fetching users:', error)
@@ -63,6 +62,19 @@ export const getUsers = async (page: number = 1, limit: number = 10, filters?: {
       message: error.message || 'Error fetching users', 
       data: null 
     }
+  }
+}
+
+export const getTotalUsers = async () => {
+  try {
+    const response = await getUsers({})
+    if (response.success && response.data?.pagination) {
+      return response.data.pagination.totalItems || 0
+    }
+    return 0
+  } catch (error) {
+    console.error('Error getting total users:', error)
+    return 0
   }
 }
 

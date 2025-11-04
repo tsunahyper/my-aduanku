@@ -1,22 +1,50 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import aduankuImg from '../assets/aduanku.png'
 import defaultPersonImg from '../assets/default-user-icon.png'
 
 interface NavbarProps {
   isAdmin: boolean;
-  activeTab?: string;
-  setActiveTab?: (tab: string) => void;
 }
 
-const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActiveTab }: NavbarProps) => {
+const Navbar = ({ isAdmin }: NavbarProps) => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [localActiveTab, setLocalActiveTab] = useState('Dashboard');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const activeTab = propActiveTab !== undefined ? propActiveTab : localActiveTab;
-  const setActiveTab = propSetActiveTab || setLocalActiveTab;
+  // Determine active tab based on current route
+  const getActiveTab = () => {
+    const path = location.pathname;
+    if (path.includes('/user-management')) return 'User Management';
+    if (path.includes('/issue-management')) return 'Issue Management';
+    if (path.includes('/analytics')) return 'Analytics & Statistics';
+    return 'Dashboard';
+  };
+
+  const activeTab = getActiveTab();
+
+  const handleTabClick = (tab: string) => {
+    const basePath = isAdmin ? '/admin' : '/user';
+    switch (tab) {
+      case 'Dashboard':
+        navigate(`${basePath}/dashboard`);
+        break;
+      case 'User Management':
+        navigate(`${basePath}/user-management`);
+        break;
+      case 'Issue Management':
+        navigate(`${basePath}/issue-management`);
+        break;
+      case 'Analytics & Statistics':
+        navigate(`${basePath}/analytics`);
+        break;
+      default:
+        navigate(`${basePath}/dashboard`);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -120,7 +148,7 @@ const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActive
             <ul className="flex flex-row font-medium mt-0 ml-6 space-x-6 rtl:space-x-reverse text-sm">
               <li>
                 <button
-                  onClick={() => setActiveTab('Dashboard')}
+                  onClick={() => handleTabClick('Dashboard')}
                   className={`${activeTab === 'Dashboard'
                     ? 'bg-white text-black border rounded-xl'
                     : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
@@ -133,7 +161,7 @@ const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActive
               {isAdmin && (
                 <li>
                   <button
-                    onClick={() => setActiveTab('User Management')}
+                    onClick={() => handleTabClick('User Management')}
                     className={`${activeTab === 'User Management'
                       ? 'bg-white text-black border rounded-xl'
                       : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
@@ -146,7 +174,7 @@ const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActive
               
               <li>
                 <button
-                  onClick={() => setActiveTab('Issue Management')}
+                  onClick={() => handleTabClick('Issue Management')}
                   className={`${activeTab === 'Issue Management'
                     ? 'bg-white text-black border rounded-xl'
                     : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
@@ -156,10 +184,10 @@ const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActive
                 </button>
               </li>
 
-              {isAdmin &&
+              {isAdmin && (
                 <li>
                   <button
-                    onClick={() => setActiveTab('Analytics & Statistics')}
+                    onClick={() => handleTabClick('Analytics & Statistics')}
                     className={`${activeTab === 'Analytics & Statistics'
                       ? 'bg-white text-black border rounded-xl'
                       : 'text-white hover:bg-white hover:text-black hover:border hover:rounded-xl'
@@ -168,7 +196,7 @@ const Navbar = ({ isAdmin, activeTab: propActiveTab, setActiveTab: propSetActive
                     Analytics & Statistics
                   </button>
                 </li>
-              }
+              )}
             </ul>
           </div>
         </div>

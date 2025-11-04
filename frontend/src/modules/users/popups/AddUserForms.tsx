@@ -22,6 +22,9 @@ const AddUserForms = ({ onClose }: { onClose?: () => void }) => {
                         setPassword(response.data?.password || '')
                     }
                 })
+                .finally(() => {
+                    setIsLoading(false) // TODO: need to call an API to send username and generated password to the user's email
+                })
                 .catch((error: any) => {
                     console.error('Error generating password:', error)
                 })
@@ -78,15 +81,21 @@ const AddUserForms = ({ onClose }: { onClose?: () => void }) => {
                 </div>
             )}
             <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Name <span className="text-red-500">*</span>
+                </label>
                 <input type="text" id="name" className="mt-1 block w-full rounded-md border border-gray-400 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="mb-4">
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                    Username <span className="text-red-500">*</span>
+                </label>
                 <input type="text" id="username" className="mt-1 block w-full rounded-md border border-gray-400 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email <span className="text-red-500">*</span>
+                </label>
                 <input type="email" id="email" className="mt-1 block w-full rounded-md border border-gray-400 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="mb-4">
@@ -120,13 +129,17 @@ const AddUserForms = ({ onClose }: { onClose?: () => void }) => {
             </div>
             {!generatePassword && (
                 <div className="mb-4">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                        Password <span className="text-red-500">*</span>
+                    </label>
                     <input type="password" id="password" className="mt-1 block w-full rounded-md border border-gray-400 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onChange={(e) => setPassword(e.target.value)} />
                 </div>
             )}
             <div className='flex flex-col gap-6'>
                 <div className="mb-4">
-                    <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
+                    <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                        Role <span className="text-red-500">*</span>
+                    </label>
                     <select id="role" className="mt-1 block w-full rounded-md border border-gray-400 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onChange={(e) => setRole(e.target.value)}>
                         <option value="">Select a role</option>
                         <option value={ROLES.admin.value}>{ROLES.admin.label}</option>
