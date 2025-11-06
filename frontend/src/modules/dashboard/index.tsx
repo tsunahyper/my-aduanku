@@ -1,3 +1,2 @@
 // Dashboard Module - Exports all dashboard components
-export { default as AdminDashboard } from './components/AdminDashboard'
-export { default as UserDashboard } from './components/UserDashboard'
+export { default as Dashboard } from './components/Dashboard'

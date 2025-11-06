@@ -1,16 +1,5 @@
 import React from 'react'
 
-/**
- * UsersActivityChart Component
- *
- * Displays a bar chart showing user activity across different roles or time periods.
- * Each bar represents the number of users in a specific category.
- *
- * Props:
- * - activityData: Object containing activity categories and their counts
- *   Example: { admin: 5, moderator: 10, citizen: 30 }
- */
-
 interface ActivityCategory {
     name: string
     count: number
@@ -21,14 +10,22 @@ interface ActivityCategory {
 interface UsersActivityChartProps {
     activityData: {
         [key: string]: number
-    }
+    } | null | undefined
 }
 
 const UsersActivityChart: React.FC<UsersActivityChartProps> = ({ activityData }) => {
+    if (!activityData || typeof activityData !== 'object') {
+        return (
+            <div className="w-full">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Users by Role</h3>
+                <div className="text-center text-gray-500 py-8">No data available</div>
+            </div>
+        )
+    }
+
     // Calculate total users for percentage calculation
     const totalUsers = Object.values(activityData).reduce((sum, count) => sum + count, 0)
 
-    // Define colors for each role/category
     const categoryColors: { [key: string]: { color: string; bgColor: string } } = {
         admin: { color: 'bg-indigo-500', bgColor: 'bg-indigo-100' },
         moderator: { color: 'bg-blue-500', bgColor: 'bg-blue-100' },
@@ -37,7 +34,6 @@ const UsersActivityChart: React.FC<UsersActivityChartProps> = ({ activityData })
         returning_users: { color: 'bg-teal-500', bgColor: 'bg-teal-100' }
     }
 
-    // Transform activityData object into array for easier mapping
     const activityCategories: ActivityCategory[] = Object.entries(activityData).map(([name, count]) => ({
         name: name
             .split('_')
@@ -58,14 +54,12 @@ const UsersActivityChart: React.FC<UsersActivityChartProps> = ({ activityData })
         <div className="w-full">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Users by Role</h3>
 
-            {/* Chart Bars */}
             <div className="space-y-4">
                 {activityCategories.map((category) => {
                     const percentage = calculatePercentage(category.count)
 
                     return (
                         <div key={category.name} className="space-y-2">
-                            {/* Category Name and Count */}
                             <div className="flex justify-between items-center">
                                 <span className="text-sm font-medium text-gray-700">
                                     {category.name}
@@ -75,7 +69,6 @@ const UsersActivityChart: React.FC<UsersActivityChartProps> = ({ activityData })
                                 </span>
                             </div>
 
-                            {/* Bar */}
                             <div className={`w-full h-8 ${category.bgColor} rounded-lg overflow-hidden`}>
                                 <div
                                     className={`h-full ${category.color} flex items-center justify-end px-3 transition-all duration-500 ease-out`}
@@ -93,7 +86,7 @@ const UsersActivityChart: React.FC<UsersActivityChartProps> = ({ activityData })
                 })}
             </div>
 
-            {/* Legend / Summary */}
+            {/* Legend */}
             <div className="mt-6 pt-4 border-t border-gray-200">
                 <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-500">Total Users</span>

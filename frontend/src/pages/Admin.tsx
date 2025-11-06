@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { AdminDashboard } from '../modules/dashboard'
+import { Dashboard } from '../modules/dashboard'
 import { IssueManagement } from '../modules/issues'
 import { Analytics } from '../modules/analytics'
 import { UserManagement } from '../modules/users'
@@ -13,7 +13,7 @@ const Admin = () => {
       <div className="w-full py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <Routes>
-            <Route path="/dashboard" element={<AdminDashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/user-management" element={<UserManagement />} />
             <Route path="/issue-management" element={<IssueManagement />} />
             <Route path="/analytics" element={<Analytics />} />

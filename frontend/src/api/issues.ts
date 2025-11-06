@@ -46,8 +46,21 @@ export const getTotalIssues = async () => {
         }
         return 0
     } catch (error) {
-        console.error('Error getting total issues:', error)
+        console.error('Error fetch total issues:', error)
         return 0
+    }
+}
+
+export const getTotalIssuesResolved = async () => {
+    try {
+        const response = await getIssues({ status: 'resolved' })
+        if (response.success && response.data?.pagination) {
+            return { success: true, message: 'Issues resolved fetched successfully', data: response.data.pagination.totalItems }
+        }
+        return { success: false, message: 'Error fetch total issues resolved', data: null }
+    } catch (error: any) {
+        console.error('Error fetch total issues resolved:', error)
+        return { success: false, message: error.message || 'Error fetch total issues resolved', data: null }
     }
 }
 
@@ -76,5 +89,30 @@ export const createIssue = async (issue: any) => {
             message: error.message || 'Error creating issue', 
             data: null 
         }
+    }
+}
+
+export const getIssuesByStatus = async () => {
+    try {
+        // Fetch all issues without status filter to get counts for all statuses
+        const response = await getIssues({})
+        if (response.success && response.data?.issues) {
+            const issues = response.data.issues
+            return { 
+                success: true, 
+                message: 'Issues by status fetched successfully', 
+                data: {
+                    reported: issues.filter((issue: any) => issue.status === 'reported').length,
+                    in_review: issues.filter((issue: any) => issue.status === 'in_review').length,
+                    assigned: issues.filter((issue: any) => issue.status === 'assigned').length,
+                    resolved: issues.filter((issue: any) => issue.status === 'resolved').length,
+                    archived: issues.filter((issue: any) => issue.status === 'archived').length,
+                } 
+            }
+        }
+        return { success: false, message: 'Error fetch issues by status', data: null }
+    } catch (error: any) {
+        console.error('Error fetch issues by status:', error)
+        return { success: false, message: error.message || 'Error fetch issues by status', data: null }
     }
 }

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import { getIssues } from '../../../api/issues'
+import { getUserRole } from '../../../api/auth'
 
 const IssueManagementTable = () => {
     const [issues, setIssues] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [pagination, setPagination] = useState<any>(null)
+    const userRole = getUserRole()
+    const isAdmin = userRole === 'admin' || userRole === 'superadmin'
 
     useEffect(() => {
         const fetchIssues = async () => {
@@ -52,22 +55,24 @@ const IssueManagementTable = () => {
                         {issues.length > 0 ? (
                             <tbody>
                                 {issues.map((issue) => (
-                                <tr key={issue._id}>
-                                    <td className="text-center border-r border-gray-300 p-2 px-4">{issue.title || 'N/A'}</td>
-                                    <td className="text-center border-r border-gray-300 p-2 px-4">{issue.category || 'N/A'}</td>
-                                    <td className="text-center border-r border-gray-300 p-2 px-4">{issue.priority || 'N/A'}</td>
-                                    <td className="text-center border-r border-gray-300 p-2 px-4">{issue.status || 'N/A'}</td>
-                                    <td className="text-center border-r border-gray-300 p-2 px-4">
-                                        {issue.isActive ? (
-                                            <CheckCircleIcon className="w-5 h-5 text-green-500 mx-auto" />
-                                        ) : (
-                                            <XCircleIcon className="w-5 h-5 text-red-500 mx-auto" />
-                                        )}
-                                    </td>
-                                    <td className="text-center border-r border-gray-300 p-2 px-4">
-                                        <div className="flex flex-row gap-2 justify-center">
-                                            <button className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 cursor-pointer">View</button>
-                                            <button className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 cursor-pointer">Assign To</button>
+                                    <tr key={issue._id}>
+                                        <td className="text-center border-r border-gray-300 p-2 px-4">{issue.title || 'N/A'}</td>
+                                        <td className="text-center border-r border-gray-300 p-2 px-4">{issue.category || 'N/A'}</td>
+                                        <td className="text-center border-r border-gray-300 p-2 px-4">{issue.priority || 'N/A'}</td>
+                                        <td className="text-center border-r border-gray-300 p-2 px-4">{issue.status || 'N/A'}</td>
+                                        <td className="text-center border-r border-gray-300 p-2 px-4">
+                                            {issue.isActive ? (
+                                                <CheckCircleIcon className="w-5 h-5 text-green-500 mx-auto" />
+                                            ) : (
+                                                <XCircleIcon className="w-5 h-5 text-red-500 mx-auto" />
+                                            )}
+                                        </td>
+                                        <td className="text-center border-r border-gray-300 p-2 px-4">
+                                            <div className="flex flex-row gap-2 justify-center">
+                                                <button className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 cursor-pointer">View</button>
+                                                {isAdmin && (
+                                                    <button className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 cursor-pointer">Assign To</button>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>

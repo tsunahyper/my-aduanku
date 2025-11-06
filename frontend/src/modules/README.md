@@ -8,8 +8,7 @@ This directory contains all feature modules organized by domain/functionality fo
 modules/
 ├── dashboard/              # Dashboard module
 │   ├── components/         # Dashboard-specific components
-│   │   ├── AdminDashboard.tsx
-│   │   └── UserDashboard.tsx
+│   │   ├── Dashboard.tsx
 │   └── index.tsx          # Module exports
 │
 ├── users/                  # User management module
@@ -38,7 +37,7 @@ Import modules from pages:
 
 ```typescript
 // In pages/Admin.tsx
-import { AdminDashboard } from '../modules/dashboard'
+import { Dashboard } from '../modules/dashboard'
 import { UserManagement } from '../modules/users'
 import { IssueManagement } from '../modules/issues'
 import { Analytics } from '../modules/analytics'

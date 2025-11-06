@@ -74,8 +74,8 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      {/* <AppContent /> */}
-      <Analytics/>
+      <AppContent />
+      {/* <Analytics/> */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
