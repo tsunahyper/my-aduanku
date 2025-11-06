@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Admin from './pages/Admin';
 import User from './pages/User';
 import { useAuth } from './hooks/useAuth';
+import { Analytics } from './modules/analytics';
 
 function AppContent() {
   const { isAuthenticated, userRole, isLoading } = useAuth();
@@ -73,7 +74,8 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      {/* <AppContent /> */}
+      <Analytics/>
       <ToastContainer
         position="top-right"
         autoClose={3000}
