@@ -4,7 +4,6 @@ import { useAuth } from '../hooks/useAuth';
 import aduankuImg from '../assets/aduanku.png'
 import defaultPersonImg from '../assets/default-user-icon.png'
 import { getCurrentUser } from '../api/users';
-
 interface NavbarProps {
   isAdmin: boolean;
 }
@@ -15,7 +14,7 @@ interface TabConfig {
   adminOnly?: boolean;
 }
 
-const Navbar = ({ isAdmin }: NavbarProps) => {
+const Navbar = ({ isAdmin = false }: NavbarProps) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,7 +75,7 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
 
   const activeTab = getActiveTab();
   const menuItems = [
-    { label: 'Profile', onClick: () => setIsDropdownOpen(false) },
+    { label: 'Profile', onClick: () => navigate(`${basePath}/profile`) },
     { label: 'Settings', onClick: () => setIsDropdownOpen(false) },
   ];
 
@@ -102,6 +101,7 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
                   src={defaultPersonImg}
                   alt="Profile"
                 />
+
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>

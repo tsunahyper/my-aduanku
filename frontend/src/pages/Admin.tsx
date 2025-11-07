@@ -5,6 +5,7 @@ import { Dashboard } from '../modules/dashboard'
 import { IssueManagement } from '../modules/issues'
 import { Analytics } from '../modules/analytics'
 import { UserManagement } from '../modules/users'
+import Profile from './Profile'
 
 const Admin = () => {
   return (
@@ -17,6 +18,7 @@ const Admin = () => {
             <Route path="/user-management" element={<UserManagement />} />
             <Route path="/issue-management" element={<IssueManagement />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
           </Routes>
         </div>

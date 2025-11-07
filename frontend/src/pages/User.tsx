@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import { Dashboard } from '../modules/dashboard'
 import { IssueManagement } from '../modules/issues'
 import { Analytics } from '../modules/analytics'
+import Profile from './Profile'
 
 const User = () => {
   return (
@@ -14,6 +15,7 @@ const User = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/issue-management" element={<IssueManagement />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Navigate to="/user/dashboard" replace />} />
           </Routes>
         </div>
