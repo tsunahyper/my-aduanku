@@ -3,11 +3,14 @@ import { toast } from 'react-toastify'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import { getIssues } from '../../../api/issues'
 import { getUserRole } from '../../../api/auth'
+import { CommentsModal } from '../../comments'
 
 const IssueManagementTable = () => {
     const [issues, setIssues] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [pagination, setPagination] = useState<any>(null)
+    const [selectedIssue, setSelectedIssue] = useState<any>(null)
+    const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false)
     const userRole = getUserRole()
     const isAdmin = userRole === 'admin' || userRole === 'superadmin'
 
@@ -33,6 +36,16 @@ const IssueManagementTable = () => {
         }
         fetchIssues()
     }, [])
+
+    const handleViewComments = (issue: any) => {
+        setSelectedIssue(issue)
+        setIsCommentsModalOpen(true)
+    }
+
+    const handleCloseComments = () => {
+        setSelectedIssue(null)
+        setIsCommentsModalOpen(false)
+    }
     return (
         <div>
             <div className="flex flex-col gap-4 items-center justify-center">
@@ -70,6 +83,12 @@ const IssueManagementTable = () => {
                                         <td className="text-center border-r border-gray-300 p-2 px-4">
                                             <div className="flex flex-row gap-2 justify-center">
                                                 <button className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 cursor-pointer">View</button>
+                                                <button 
+                                                    onClick={() => handleViewComments(issue)}
+                                                    className="bg-purple-500 text-white px-4 py-1 rounded-md hover:bg-purple-600 cursor-pointer"
+                                                >
+                                                    Comments
+                                                </button>
                                                 {isAdmin && (
                                                     <button className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 cursor-pointer">Assign To</button>
                                                 )}
@@ -91,6 +110,16 @@ const IssueManagementTable = () => {
                 </div>
             </div>
         </div>
+
+        {/* Comments Modal */}
+        {isCommentsModalOpen && selectedIssue && (
+            <CommentsModal
+                issueId={selectedIssue._id}
+                issueName={selectedIssue.title}
+                onClose={handleCloseComments}
+            />
+        )}
+    </div>
     )
 }
 
