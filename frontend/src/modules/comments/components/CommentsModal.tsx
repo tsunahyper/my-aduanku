@@ -3,6 +3,13 @@ import { XMarkIcon, PencilIcon, TrashIcon, HeartIcon } from '@heroicons/react/24
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { toast } from 'react-toastify'
 import { decodeToken } from '../../../utils/commonUtils'
+import { 
+  getCommentsByIssue, 
+  createComment, 
+  updateComment, 
+  deleteComment, 
+  toggleCommentLike 
+} from '../../../api/comments'
 
 interface CommentsModalProps {
   issueId: string
@@ -57,14 +64,11 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
   const fetchComments = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments/issue/${issueId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      const data = await response.json()
-      if (data.success) {
-        setComments(data.data.comments || [])
+      const response = await getCommentsByIssue(issueId)
+      if (response.success) {
+        setComments(response.data.comments || [])
+      } else {
+        toast.error(response.message || 'Failed to load comments')
       }
     } catch (error) {
       console.error('Error fetching comments:', error)
@@ -82,24 +86,13 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
 
     setSubmitting(true)
     try {
-      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({
-          issueId: issueId,
-          text: newComment,
-        }),
-      })
-      const data = await response.json()
-      if (data.success) {
+      const response = await createComment(issueId, newComment)
+      if (response.success) {
         toast.success('Comment added successfully')
         setNewComment('')
         fetchComments()
       } else {
-        toast.error(data.message || 'Failed to add comment')
+        toast.error(response.message || 'Failed to add comment')
       }
     } catch (error) {
       console.error('Error adding comment:', error)
@@ -117,22 +110,14 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
 
     setSubmitting(true)
     try {
-      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments/${commentId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ text: editContent }),
-      })
-      const data = await response.json()
-      if (data.success) {
+      const response = await updateComment(commentId, editContent)
+      if (response.success) {
         toast.success('Comment updated successfully')
         setEditingCommentId(null)
         setEditContent('')
         fetchComments()
       } else {
-        toast.error(data.message || 'Failed to update comment')
+        toast.error(response.message || 'Failed to update comment')
       }
     } catch (error) {
       console.error('Error updating comment:', error)
@@ -148,18 +133,12 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
     }
 
     try {
-      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments/${commentId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      const data = await response.json()
-      if (data.success) {
+      const response = await deleteComment(commentId)
+      if (response.success) {
         toast.success('Comment deleted successfully')
         fetchComments()
       } else {
-        toast.error(data.message || 'Failed to delete comment')
+        toast.error(response.message || 'Failed to delete comment')
       }
     } catch (error) {
       console.error('Error deleting comment:', error)
@@ -169,15 +148,11 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
 
   const handleLikeToggle = async (commentId: string) => {
     try {
-      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments/${commentId}/like`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      const data = await response.json()
-      if (data.success) {
+      const response = await toggleCommentLike(commentId)
+      if (response.success) {
         fetchComments()
+      } else {
+        toast.error(response.message || 'Failed to update like')
       }
     } catch (error) {
       console.error('Error toggling like:', error)
