@@ -1,3 +1,8 @@
+import { decodeToken } from "../utils/commonUtils"
+
 export const getUserRole = (): string | null => {
-    return localStorage.getItem('role') || null
+    const token = localStorage.getItem('token')
+    if (!token) return null
+    const decoded = decodeToken(token)
+    return decoded.role || null
 }

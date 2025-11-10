@@ -49,7 +49,7 @@ const Dashboard = () => {
       setIssuesResolved(data.data)
     }).catch((error: any) => {
       console.error('Error fetching total issues resolved:', error)
-      setIssuesResolved(null)
+      setIssuesResolved(0)
     })
   }, [])
 
@@ -82,7 +82,6 @@ const Dashboard = () => {
           icon={<ExclamationTriangleIcon className="w-7 h-7 text-white" />}
           numberOfRecords={totalIssues}
           totalRecords={'Total Number of Issues'}
-          percentageRecords={'+12'}
           alt={'total-issues'}
           statusColor={'red'}
         />
@@ -91,7 +90,6 @@ const Dashboard = () => {
             icon={<UsersIcon className="w-7 h-7 text-white" />}
             numberOfRecords={totalUsers}
             totalRecords={'Total Number of Users'}
-            percentageRecords={'+12'}
             alt={'total-users'}
             statusColor={'blue'}
           />
@@ -100,7 +98,6 @@ const Dashboard = () => {
           icon={<ChatBubbleLeftRightIcon className="w-7 h-7 text-white" />}
           numberOfRecords={comments}
           totalRecords={'Total Number of Comments'}
-          percentageRecords={'+12'}
           alt={'total-comments'}
           statusColor={'purple'}
         />
@@ -110,7 +107,6 @@ const Dashboard = () => {
           icon={<CheckCircleIcon className="w-7 h-7 text-white" />}
           numberOfRecords={issuesResolved}
           totalRecords={'Total Number of Issues Resolved'}
-          percentageRecords={'+12'}
           alt={'total-issues-resolved'}
           statusColor={'green'}
         />

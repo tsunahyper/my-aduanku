@@ -109,7 +109,6 @@ const IssueManagementTable = () => {
                     </table>
                 </div>
             </div>
-        </div>
 
         {/* Comments Modal */}
         {isCommentsModalOpen && selectedIssue && (
@@ -120,7 +119,6 @@ const IssueManagementTable = () => {
             />
         )}
     </div>
-    )
-}
+)}
 
 export default IssueManagementTable
