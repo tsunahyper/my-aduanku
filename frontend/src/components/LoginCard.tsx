@@ -12,8 +12,8 @@ const LoginCard = ({ isAdmin, setIsLogin, icon }: { isAdmin: boolean, setIsLogin
                         : "bg-gradient-to-r from-teal-600 to-cyan-600 border-2 border-teal-400"
                 }`}
             >
-                <div className="w-full rounded-t-xl h-48 md:h-auto md:w-48 md:rounded-none md:rounded-l-xl flex items-center justify-center bg-white/10 backdrop-blur-sm">
-                    <div className="text-white [&>svg]:w-24 [&>svg]:h-24">
+                <div className="w-full rounded-t-xl h-48 md:h-auto md:w-48 md:rounded-none md:rounded-l-xl flex items-center justify-center">
+                    <div className="text-white [&>svg]:w-14 [&>svg]:h-14">
                         {icon}
                     </div>
                 </div>

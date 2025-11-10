@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import LoginCard from '../components/LoginCard'
 import LoginComponents from '../components/LoginComponents'
 import aduankuImg from '../assets/aduanku.png'
-import { ShieldCheckIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { BuildingOffice2Icon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -73,7 +73,7 @@ const Login = () => {
                         <LoginCard
                             isAdmin={true}
                             setIsLogin={() => handleCardClick(true)}
-                            icon={<ShieldCheckIcon />}
+                            icon={<BuildingOffice2Icon />}
                         />
                         {/* User Login Card */}
                         <LoginCard
