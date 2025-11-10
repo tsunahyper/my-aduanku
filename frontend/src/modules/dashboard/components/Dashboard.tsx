@@ -11,7 +11,7 @@ import { getTotalIssues, getTotalIssuesResolved } from "../../../api/issues"
 import { useEffect, useState } from "react"
 import { getTotalUsers } from "../../../api/users"
 import { useNavigate } from "react-router-dom"
-import { getComments } from "../../../api/comments"
+import { getCommentStats } from "../../../api/comments"
 import { getUserRole } from "../../../api/auth"
 
 const Dashboard = () => {
@@ -38,11 +38,11 @@ const Dashboard = () => {
       setTotalUsers(0)
     })
 
-    getComments().then((data: any) => {
-      setComments(data.data.totalItems)
+    getCommentStats().then((data: any) => {
+      setComments(data.data)
     }).catch((error: any) => {
-      console.error('Error fetching comments:', error)
-      setComments(null)
+      console.error('Error fetching comment stats:', error)
+      setComments(0)
     })
 
     getTotalIssuesResolved().then((data: any) => {

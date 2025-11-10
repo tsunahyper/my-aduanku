@@ -4,7 +4,8 @@ import {
   getComments,
   updateComment,
   deleteComment,
-  toggleCommentLike
+  toggleCommentLike,
+  getCommentStats
 } from "../controllers/comments.controller.js";
 import { authorize, checkResourceOwnership } from "../middlewares/auth.middleware.js";
 import { commentLimiter } from "../middlewares/rateLimit.middleware.js";
@@ -15,6 +16,11 @@ const CommentRouter = Router();
 
 CommentRouter.get('/health', (req, res) => {
   res.status(200).json({ ok: true, service: 'comment-service', time: new Date().toISOString() });
+});
+
+// Get comment statistics
+CommentRouter.get('/stats', authorize, (req, res, next) => {
+  getCommentStats(req, res, next);
 });
 
 // Get comments for an issue

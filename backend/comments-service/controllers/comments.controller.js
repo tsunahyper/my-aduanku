@@ -206,3 +206,19 @@ export const toggleCommentLike = async (req, res, next) => {
         next(error);
     }
 };
+
+// Get comment statistics
+export const getCommentStats = async (req, res, next) => {
+    try {
+        const totalComments = await CommentModel.countDocuments({ isDeleted: false });
+        
+        res.status(200).json({
+            success: true,
+            data: {
+                totalComments
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
