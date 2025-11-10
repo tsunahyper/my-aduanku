@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import LoginCard from '../components/LoginCard'
 import LoginComponents from '../components/LoginComponents'
+import aduankuImg from '../assets/aduanku.png'
+import { ShieldCheckIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -60,21 +62,24 @@ const Login = () => {
                     {/* Selection Card with Glass Effect */}
                     <div className="relative bg-white/95 backdrop-blur-lg p-10 rounded-2xl shadow-2xl flex flex-col items-center justify-center gap-6 w-full max-w-3xl border border-white/20">
                         <div className="text-center mb-4">
-                            <h1 className="font-sans text-4xl font-bold text-gray-800 mb-2">ADUANKU</h1>
+                            <div className="flex flex-row items-center justify-center gap-2">
+                                <img src={aduankuImg} className="h-12 w-12" alt='aduanku-logo' />
+                                <h1 className="font-sans text-4xl font-bold text-gray-800 mb-2">ADUANKU</h1>
+                            </div>
                             <p className="text-gray-600 text-lg">Community Issue Management System</p>
                             <div className="mt-4 h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
                         </div>
                         {/* Admin Login Card */}
-                        <LoginCard 
-                            isAdmin={true} 
-                            setIsLogin={() => handleCardClick(true)} 
-                            image="/images/admin.jpg" 
+                        <LoginCard
+                            isAdmin={true}
+                            setIsLogin={() => handleCardClick(true)}
+                            icon={<ShieldCheckIcon />}
                         />
                         {/* User Login Card */}
-                        <LoginCard 
-                            isAdmin={false} 
-                            setIsLogin={() => handleCardClick(false)} 
-                            image="/images/user.jpg" 
+                        <LoginCard
+                            isAdmin={false}
+                            setIsLogin={() => handleCardClick(false)}
+                            icon={<UserCircleIcon />}
                         />
                     </div>
                 </div>

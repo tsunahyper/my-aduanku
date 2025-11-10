@@ -1,4 +1,4 @@
-const LoginCard = ({ isAdmin, setIsLogin, image }: { isAdmin: boolean, setIsLogin: (isAdmin: boolean) => void, image: string }) => {
+const LoginCard = ({ isAdmin, setIsLogin, icon }: { isAdmin: boolean, setIsLogin: (isAdmin: boolean) => void, icon: React.ReactNode }) => {
     const handleLogin = () => {
         setIsLogin(!isAdmin)
     }
@@ -12,7 +12,11 @@ const LoginCard = ({ isAdmin, setIsLogin, image }: { isAdmin: boolean, setIsLogi
                         : "bg-gradient-to-r from-teal-600 to-cyan-600 border-2 border-teal-400"
                 }`}
             >
-                <img className="object-cover w-full rounded-t-xl h-48 md:h-auto md:w-48 md:rounded-none md:rounded-l-xl" src={image} alt="" />
+                <div className="w-full rounded-t-xl h-48 md:h-auto md:w-48 md:rounded-none md:rounded-l-xl flex items-center justify-center bg-white/10 backdrop-blur-sm">
+                    <div className="text-white [&>svg]:w-24 [&>svg]:h-24">
+                        {icon}
+                    </div>
+                </div>
                 <div className="flex flex-col justify-between p-6 leading-normal flex-1">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-white flex items-center gap-2">
                         <span>{isAdmin ? 'Admin' : 'User'} Portal</span>
