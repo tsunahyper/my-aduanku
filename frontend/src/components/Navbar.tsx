@@ -76,7 +76,6 @@ const Navbar = ({ isAdmin = false }: NavbarProps) => {
   const activeTab = getActiveTab();
   const menuItems = [
     { label: 'Profile', onClick: () => navigate(`${basePath}/profile`) },
-    { label: 'Settings', onClick: () => setIsDropdownOpen(false) },
   ];
 
   return (
