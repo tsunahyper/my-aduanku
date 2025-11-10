@@ -165,3 +165,37 @@ export const getCurrentUser = async () => {
     }
   }
 }
+
+export const updateProfile = async (userData: any) => {
+  try {
+    const response = await fetch(`${USERDOMAIN}/users/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(userData),
+    })
+
+    if (response.status === 401 || response.status === 403) {
+      localStorage.removeItem('token')
+      window.location.href = '/login'
+      throw new Error('Session expired')
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+    }
+
+    const responseData = await response.json()
+    return responseData
+  } catch (error: any) {
+    console.error('Error updating profile:', error)
+    return {
+      success: false,
+      message: error.message || 'Error updating profile',
+      data: null
+    }
+  }
+}
