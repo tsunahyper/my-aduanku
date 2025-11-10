@@ -50,8 +50,16 @@ const LoginComponents = ({ isAdmin }: { isAdmin: boolean }) => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-100">
-            <div className="flex flex-col items-center justify-center bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+            {/* Animated Background Elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-white opacity-10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white opacity-5 rounded-full blur-2xl"></div>
+            </div>
+
+            {/* Login Card with Glass Effect */}
+            <div className="relative flex flex-col items-center justify-center bg-white/95 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md border border-white/20">
                 {/* Loading Spinner */}
                 {loading && <div className="flex items-center justify-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
@@ -62,7 +70,14 @@ const LoginComponents = ({ isAdmin }: { isAdmin: boolean }) => {
                 {success && <div className="text-green-500 text-center mb-4 p-2 rounded-md bg-green-100 border border-green-300">{success}</div>}
 
                 {/* Login Form */}
-                <h1 className="text-2xl font-bold mb-10 text-center"> Welcome to the {isAdmin ? 'Admin' : 'User'} Login Page</h1>
+                <div className="mb-8 text-center">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                        Welcome Back!
+                    </h1>
+                    <p className="text-gray-600">
+                        {isAdmin ? 'Admin Portal' : 'User Portal'}
+                    </p>
+                </div>
                 <form className="w-full max-w-md">
                     {/* Email Input */}
                     <div className="mb-4 flex flex-row items-center justify-center gap-4 w-full">
@@ -103,7 +118,7 @@ const LoginComponents = ({ isAdmin }: { isAdmin: boolean }) => {
                     <div className="flex flex-row items-center justify-center gap-4 w-full">
                         <button 
                             type="button" 
-                            className="flex-1 py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50" 
+                            className="flex-1 py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 transform transition-all duration-200 hover:scale-105 shadow-lg" 
                             onClick={handleLogin}
                             disabled={loading}
                         >
@@ -113,7 +128,7 @@ const LoginComponents = ({ isAdmin }: { isAdmin: boolean }) => {
                         {/* Back Button */}
                         <button 
                             type="button" 
-                            className="flex-1 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500" 
+                            className="flex-1 py-3 px-4 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transform transition-all duration-200 hover:scale-105" 
                             onClick={handleBackToSelection}
                             disabled={loading}
                         >
