@@ -25,6 +25,31 @@ export const getCommentStats = async () => {
     }
 }
 
+export const getUserIssueComments = async (page = 1, limit = 20) => {
+    try {
+        const response = await fetch(`${COMMENTDOMAIN}/comments/my-issues?page=${page}&limit=${limit}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = '/login'
+                return { success: false, message: 'Session expired', data: null }
+            }
+            const errorData = await response.json().catch(() => ({}))
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+        }
+        const responseData = await response.json()
+        return responseData
+    } catch (error: any) {
+        console.error('Error fetching user issue comments:', error)
+        return { success: false, message: error.message || 'Error fetching user issue comments', data: null }
+    }
+}
+
 export const getCommentsByIssue = async (issueId: string) => {
     try {
         const response = await fetch(`${COMMENTDOMAIN}/comments/issue/${issueId}`, {

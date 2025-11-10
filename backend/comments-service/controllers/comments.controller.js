@@ -222,3 +222,46 @@ export const getCommentStats = async (req, res, next) => {
         next(error);
     }
 };
+
+// Get all comments for user's issues
+export const getUserIssueComments = async (req, res, next) => {
+    try {
+        const { page = 1, limit = 20 } = req.query;
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+
+        // Find all issues created by the user
+        const userIssues = await IssueModel.find({ createdBy: req.user._id }).select('_id');
+        const issueIds = userIssues.map(issue => issue._id);
+
+        // Find all comments for those issues
+        const comments = await CommentModel.find({ 
+            issue: { $in: issueIds },
+            isDeleted: false 
+        })
+        .populate('author', 'name username avatar')
+        .populate('issue', 'title status category')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(parseInt(limit));
+
+        const total = await CommentModel.countDocuments({ 
+            issue: { $in: issueIds },
+            isDeleted: false 
+        });
+
+        res.status(200).json({
+            success: true,
+            data: {
+                comments,
+                pagination: {
+                    currentPage: parseInt(page),
+                    totalPages: Math.ceil(total / parseInt(limit)),
+                    totalItems: total,
+                    itemsPerPage: parseInt(limit)
+                }
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
