@@ -57,7 +57,7 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
   const fetchComments = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments?issueId=${issueId}`, {
+      const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments/issue/${issueId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -170,7 +170,7 @@ const CommentsModal = ({ issueId, issueName, onClose }: CommentsModalProps) => {
   const handleLikeToggle = async (commentId: string) => {
     try {
       const response = await fetch(`${process.env.COMMENTDOMAIN || 'http://localhost:5004/api/v1'}/comments/${commentId}/like`, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
