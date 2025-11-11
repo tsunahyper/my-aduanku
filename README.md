@@ -1,5 +1,4 @@
 # ADUANKU - Community Issue Management System
-
 A community issue management system for reporting and tracking local issues with separate user and admin interfaces.
 
 ## 🚀 Quick Start (Development)

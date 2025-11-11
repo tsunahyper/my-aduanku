@@ -155,66 +155,6 @@ POST   /api/v1/analytics/generate     # Generate analytics (superadmin)
 GET    /api/v1/analytics/health       # Service health check
 ```
 
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- MongoDB
-- Docker & Docker Compose (optional)
-- AWS S3 bucket (for file uploads)
-
-### 1. Environment Setup
-
-Create environment files for each service:
-
-```bash
-# Copy the example files
-cp auth-service/.env.example auth-service/.env
-cp user-service/.env.example user-service/.env
-cp issue-service/.env.example issue-service/.env
-cp comments-service/.env.example comments-service/.env
-cp analytics-service/.env.example analytics-service/.env
-```
-
-### 2. Install Dependencies
-
-```bash
-# Install dependencies for each service
-cd auth-service && npm install
-cd ../user-service && npm install
-cd ../issue-service && npm install
-cd ../comments-service && npm install
-cd ../analytics-service && npm install
-```
-
-### 3. Start Services
-
-#### Option A: Docker Compose (Recommended)
-```bash
-docker-compose up -d
-```
-
-#### Option B: Individual Services
-```bash
-# Start each service individually
-cd auth-service && npm start
-cd user-service && npm start
-cd issue-service && npm start
-cd comments-service && npm start
-cd analytics-service && npm start
-```
-
-### 4. Verify Services
-
-Check that all services are running:
-```bash
-curl http://localhost:5001/health  # Auth service
-curl http://localhost:5002/health  # User service
-curl http://localhost:5003/health  # Issue service
-curl http://localhost:5004/health  # Comments service
-curl http://localhost:5005/health  # Analytics service
-```
-
 ## 🔐 Authentication & Authorization
 
 ### User Roles
@@ -321,35 +261,12 @@ Each service includes:
 - Health checks for service monitoring
 - Environment variable configuration
 
-## 🧪 Testing
-
-```bash
-# Run tests for each service
-cd auth-service && npm test
-cd user-service && npm test
-cd issue-service && npm test
-cd comments-service && npm test
-cd analytics-service && npm test
-```
-
 ## 📝 API Documentation
 
 - **Health Endpoints**: All services have `/health` endpoints
 - **Error Handling**: Consistent error response format
 - **Status Codes**: Standard HTTP status codes
 - **Response Format**: JSON responses with consistent structure
-
-## 🚀 Deployment
-
-### Production Checklist
-- [ ] Set secure JWT secrets
-- [ ] Configure production MongoDB
-- [ ] Set up AWS S3 buckets
-- [ ] Configure CORS for frontend domain
-- [ ] Set up monitoring and logging
-- [ ] Configure reverse proxy (nginx)
-- [ ] Set up SSL certificates
-- [ ] Configure backup strategies
 
 ## 𖢥 Troubleshoot
 
@@ -358,14 +275,3 @@ For troubleshooting issues:
 - Review logs for error details
 - Verify environment configuration
 - Test API endpoints with tools like Postman
-
-## 🔄 Future Enhancements
-
-- [ ] Real-time notifications with WebSockets
-- [ ] Advanced analytics and reporting
-- [ ] File compression and optimization
-- [ ] API versioning strategy
-- [ ] Comprehensive logging system
-- [ ] Performance monitoring
-- [ ] Automated testing pipeline
-- [ ] CI/CD deployment
