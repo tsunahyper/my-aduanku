@@ -23,6 +23,27 @@ export const createIssue = async (req, res, next) => {
             throw new BadRequestError('Missing required fields: title, description, category, and location coordinates');
         }
 
+        // Auto-assign to nearest admin if available
+        let assignedToAdmin = null;
+        let assignmentNote = 'Issue reported';
+
+        try {
+            // active admin users
+            const admins = await UserModel.find({ 
+                role: { $in: ['admin', 'superadmin'] },
+                isActive: true 
+            });
+
+            if (admins.length > 0) {
+                // simple round-robin or random assignment
+                const randomAdmin = admins[Math.floor(Math.random() * admins.length)];
+                assignedToAdmin = randomAdmin._id;
+                assignmentNote = `Issue reported and auto-assigned to admin: ${randomAdmin.name}`;
+            }
+        } catch (error) {
+            console.log('Could not auto-assign to admin:', error.message);
+        }
+
         // Create the issue
         const issueData = {
             title,
@@ -34,11 +55,11 @@ export const createIssue = async (req, res, next) => {
             isPublic,
             isAnonymous,
             createdBy: req.user._id,
-            assignedTo: req.user._id,
+            assignedTo: assignedToAdmin,
             timeline: [{
                 status: 'reported',
                 changedBy: req.user._id,
-                note: 'Issue reported and auto-assigned to creator'
+                note: assignmentNote
             }]
         };
 
