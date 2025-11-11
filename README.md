@@ -6,6 +6,7 @@ A community issue management system for reporting and tracking local issues with
 ### Prerequisites
 - Docker and Docker Compose installed
 - Git
+- Node Js
 
 ### Setup and Run
 
@@ -86,14 +87,14 @@ my-aduanku/
 
 ## 📝 Features
 
-- ✅ User authentication (Admin/User roles)
-- ✅ Issue reporting with geolocation
-- ✅ Issue assignment workflow
-- ✅ Comments and discussions
-- ✅ Status tracking (Reported → In Review → Assigned → Resolved)
-- ✅ Admin dashboard with analytics
-- ✅ User dashboard
-- ✅ Profile management
+- User authentication (Admin/User roles)
+- Issue reporting with geolocation
+- Issue assignment workflow
+- Comments and discussions
+- Status tracking (Reported → In Review → Assigned → Resolved)
+- Admin dashboard with analytics
+- User dashboard
+- Profile management
 
 ## 🐛 Troubleshooting
 
@@ -114,7 +115,3 @@ Make sure ports 3000-3001 and 5001-5005 are not in use by other applications.
 # Restart MongoDB
 docker-compose -f docker-compose.dev.yml restart mongodb
 ```
-
-## 📄 License
-
-This project is for educational purposes.
