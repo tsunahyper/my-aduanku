@@ -34,10 +34,11 @@ export const createIssue = async (req, res, next) => {
             isPublic,
             isAnonymous,
             createdBy: req.user._id,
+            assignedTo: req.user._id, // Auto-assign to creator
             timeline: [{
                 status: 'reported',
                 changedBy: req.user._id,
-                note: 'Issue reported'
+                note: 'Issue reported and auto-assigned to creator'
             }]
         };
 
@@ -204,6 +205,14 @@ export const updateIssue = async (req, res, next) => {
                 }
             ];
 
+            // Handle resolution tracking
+            if (req.body.status === 'resolved') {
+                updateData.resolution = {
+                    resolvedAt: new Date(),
+                    resolvedBy: req.user._id,
+                    resolutionNote: req.body.resolutionNote || 'Issue marked as resolved'
+                };
+            }
         }
 
         const updatedIssue = await IssueModel.findByIdAndUpdate(
