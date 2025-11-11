@@ -199,3 +199,70 @@ export const updateProfile = async (userData: any) => {
     }
   }
 }
+
+export const updateUser = async (userId: string, userData: any) => {
+  try {
+    const response = await fetch(`${USERDOMAIN}/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(userData),
+    })
+
+    if (response.status === 401 || response.status === 403) {
+      localStorage.removeItem('token')
+      window.location.href = '/login'
+      throw new Error('Session expired')
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+    }
+
+    const responseData = await response.json()
+    return responseData
+  } catch (error: any) {
+    console.error('Error updating user:', error)
+    return {
+      success: false,
+      message: error.message || 'Error updating user',
+      data: null
+    }
+  }
+}
+
+export const deleteUser = async (userId: string) => {
+  try {
+    const response = await fetch(`${USERDOMAIN}/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+
+    if (response.status === 401 || response.status === 403) {
+      localStorage.removeItem('token')
+      window.location.href = '/login'
+      throw new Error('Session expired')
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+    }
+
+    const responseData = await response.json()
+    return responseData
+  } catch (error: any) {
+    console.error('Error deleting user:', error)
+    return {
+      success: false,
+      message: error.message || 'Error deleting user',
+      data: null
+    }
+  }
+}

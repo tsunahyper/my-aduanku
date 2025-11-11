@@ -18,6 +18,9 @@ cd my-aduanku
 # Start development environment
 ./start-dev.sh
 
+# Create default users (superadmin, admin, user)
+./seed-users.sh
+
 # Stop all services
 ./stop.sh
 ```
@@ -52,15 +55,36 @@ cd my-aduanku
 - **comments-service** (Port 5004): Comments and discussions
 - **analytics-service** (Port 5005): Analytics and reporting
 
+## 🌱 Seeding Default Users
+
+The seed script creates three default users with different roles for testing and development:
+
+```bash
+./seed-users.sh
+```
+
+This will create:
+- **Superadmin**: Full access including user deletion
+- **Admin**: Can manage users and issues
+- **User**: Can report and view issues
+
+**Note:** Run this script **after** starting the development environment with `./start-dev.sh`. The script is safe to run multiple times - it will skip users that already exist.
+
 ## 🔑 Default Login Credentials
 
+After running `./seed-users.sh`, you can login with these accounts:
+
+**Superadmin:**
+- Email: `superadmin@aduanku.com`
+- Password: `superadmin123`
+
 **Admin:**
-- Email: `admin@example.com`
-- Password: `Admin@1234`
+- Email: `admin@aduanku.com`
+- Password: `admin123`
 
 **User:**
-- Email: `john.doe@example.com`
-- Password: `User@1234`
+- Email: `user@aduanku.com`
+- Password: `user123`
 
 ## 📁 Project Structure
 
@@ -75,19 +99,22 @@ my-aduanku/
 │   └── analytics-service/  # Analytics service
 ├── docker-compose.dev.yml  # Development Docker Compose
 ├── start-dev.sh           # Development startup script
+├── seed-users.sh          # Create default users script
 └── stop.sh                # Stop all services script
 ```
 
 ## 📝 Features
 
-- User authentication (Admin/User roles)
+- User authentication with three roles (Superadmin/Admin/User)
+- Role-based access control
 - Issue reporting with geolocation
-- Issue assignment workflow
-- Comments and discussions
+- Auto-assignment workflow to admins
+- Comments and discussions on issues
 - Status tracking (Reported → In Review → Assigned → Resolved)
 - Admin dashboard with analytics
 - User dashboard
 - Profile management
+- User management (edit/delete)
 
 ## 📸 Screenshots
 

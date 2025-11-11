@@ -2,34 +2,56 @@ import React, { useEffect, useState } from 'react'
 import { getUsers } from '../../../api/users'
 import { toast } from 'react-toastify'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import EditUserPopup from '../popups/EditUser'
+import DeleteUserPopup from '../popups/DeleteUser'
+import { getUserRole } from '../../../api/auth'
 
 const UserManagementTable = () => {
     const [users, setUsers] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [pagination, setPagination] = useState<any>(null)
+    const [selectedUser, setSelectedUser] = useState<any>(null)
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false)
+    const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false)
+    const currentUserRole = getUserRole()
+
+    const fetchUsers = async () => {
+        try {
+            setLoading(true)
+            const response = await getUsers({ page: 1, limit: 10 })
+            if (response.success && response.data) {
+                setUsers(response.data.users || [])
+                setPagination(response.data.pagination || null)
+            } else {
+                toast.error(response.message || 'Failed to fetch users')
+                setUsers([])
+            }
+        } catch (error: any) {
+            console.error('Error fetching users:', error)
+            toast.error(error.message || 'Failed to fetch users, please try again later')
+            setUsers([])
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                setLoading(true)
-                const response = await getUsers({ page: 1, limit: 10 })
-                if (response.success && response.data) {
-                    setUsers(response.data.users || [])
-                    setPagination(response.data.pagination || null)
-                } else {
-                    toast.error(response.message || 'Failed to fetch users')
-                    setUsers([])
-                }
-            } catch (error: any) {
-                console.error('Error fetching users:', error)
-                toast.error(error.message || 'Failed to fetch users, please try again later')
-                setUsers([])
-            } finally {
-                setLoading(false)
-            }
-        }
         fetchUsers()
     }, [])
+
+    const handleEdit = (user: any) => {
+        setSelectedUser(user)
+        setIsEditPopupOpen(true)
+    }
+
+    const handleDelete = (user: any) => {
+        setSelectedUser(user)
+        setIsDeletePopupOpen(true)
+    }
+
+    const handleSuccess = () => {
+        fetchUsers()
+    }
     return (
         <div>
             <div className="flex flex-col gap-4 items-center justify-center">
@@ -66,10 +88,22 @@ const UserManagementTable = () => {
                                     </td>
                                     <td className="text-center border-r border-gray-300 p-2 px-4">
                                         <div className="flex flex-row gap-2 justify-center">
-                                            <button className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 cursor-pointer">Edit</button>
-                                            <button className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 cursor-pointer">Delete</button>
-                                            </div>
-                                        </td>
+                                            <button 
+                                                onClick={() => handleEdit(user)}
+                                                className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 cursor-pointer"
+                                            >
+                                                Edit
+                                            </button>
+                                            {currentUserRole === 'superadmin' && (
+                                                <button 
+                                                    onClick={() => handleDelete(user)}
+                                                    className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 cursor-pointer"
+                                                >
+                                                    Delete
+                                                </button>
+                                            )}
+                                        </div>
+                                    </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -85,6 +119,24 @@ const UserManagementTable = () => {
                     </table>
                 </div>
             </div>
+
+            {/* Edit User Popup */}
+            {isEditPopupOpen && selectedUser && (
+                <EditUserPopup 
+                    user={selectedUser}
+                    onClose={() => setIsEditPopupOpen(false)}
+                    onSuccess={handleSuccess}
+                />
+            )}
+
+            {/* Delete User Popup */}
+            {isDeletePopupOpen && selectedUser && (
+                <DeleteUserPopup 
+                    user={selectedUser}
+                    onClose={() => setIsDeletePopupOpen(false)}
+                    onSuccess={handleSuccess}
+                />
+            )}
         </div>
     )
 }
