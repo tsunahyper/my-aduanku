@@ -78,13 +78,6 @@ my-aduanku/
 └── stop.sh                # Stop all services script
 ```
 
-## 🧹 Clean Up
-
-```bash
-# Stop all services
-./stop.sh
-```
-
 ## 📝 Features
 
 - User authentication (Admin/User roles)
@@ -95,23 +88,3 @@ my-aduanku/
 - Admin dashboard with analytics
 - User dashboard
 - Profile management
-
-## 🐛 Troubleshooting
-
-### Services not starting?
-```bash
-# Check Docker status
-docker ps
-
-# View logs for errors
-docker-compose -f docker-compose.dev.yml logs
-```
-
-### Port conflicts?
-Make sure ports 3000-3001 and 5001-5005 are not in use by other applications.
-
-### MongoDB connection issues?
-```bash
-# Restart MongoDB
-docker-compose -f docker-compose.dev.yml restart mongodb
-```
