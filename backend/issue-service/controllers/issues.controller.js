@@ -34,7 +34,7 @@ export const createIssue = async (req, res, next) => {
             isPublic,
             isAnonymous,
             createdBy: req.user._id,
-            assignedTo: req.user._id, // Auto-assign to creator
+            assignedTo: req.user._id,
             timeline: [{
                 status: 'reported',
                 changedBy: req.user._id,
