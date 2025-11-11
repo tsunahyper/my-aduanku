@@ -88,3 +88,81 @@ my-aduanku/
 - Admin dashboard with analytics
 - User dashboard
 - Profile management
+
+## 📸 Screenshots
+
+### Login Interface
+
+<table>
+  <tr>
+    <td width="33%">
+      <img src="aduanku-reference/login-interface.png" alt="Login Selection" />
+      <p align="center"><strong>Login Selection</strong></p>
+    </td>
+    <td width="33%">
+      <img src="aduanku-reference/admin-login-portal.png" alt="Admin Login" />
+      <p align="center"><strong>Admin Login Portal</strong></p>
+    </td>
+    <td width="33%">
+      <img src="aduanku-reference/user-login-portal.png" alt="User Login" />
+      <p align="center"><strong>User Login Portal</strong></p>
+    </td>
+  </tr>
+</table>
+
+### Admin Dashboard
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="aduanku-reference/admin-dashboard.png" alt="Admin Dashboard" />
+      <p align="center"><strong>Admin Dashboard</strong></p>
+    </td>
+    <td width="50%">
+      <img src="aduanku-reference/admin-user-mgt.png" alt="User Management" />
+      <p align="center"><strong>User Management</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="aduanku-reference/admin-issue-mgt.png" alt="Issue Management" />
+      <p align="center"><strong>Issue Management</strong></p>
+    </td>
+    <td width="50%">
+      <img src="aduanku-reference/admin-analytics-1.png" alt="Analytics - Overview" />
+      <p align="center"><strong>Analytics - Overview</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="aduanku-reference/admin-analytics-2.png" alt="Analytics - Charts" />
+      <p align="center"><strong>Analytics - Charts</strong></p>
+    </td>
+    <td width="50%">
+      <img src="aduanku-reference/admin-analytics-3.png" alt="Analytics - Details" />
+      <p align="center"><strong>Analytics - Details</strong></p>
+    </td>
+  </tr>
+</table>
+
+### User Dashboard
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="aduanku-reference/user-dashboard.png" alt="User Dashboard" />
+      <p align="center"><strong>User Dashboard</strong></p>
+    </td>
+    <td width="50%">
+      <img src="aduanku-reference/user-issue management.png" alt="Issue Management" />
+      <p align="center"><strong>Issue Management</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <img src="aduanku-reference/profile-settings.png" alt="Profile Settings" />
+      <p align="center"><strong>Profile Settings</strong></p>
+    </td>
+  </tr>
+</table>
+
